@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>老眼チェック｜近くの見え方・字の大きさ・赤緑（画面の実寸をカードで合わせる）広告なし｜ためして</title>
+  <meta name="description" content="スマホで老眼のセルフチェック。カードで画面の実寸を合わせてから、ぼやけ始める距離（近点）、読める一番小さい字、赤と緑の見え方を試します。広告なし・登録なし。医療の検査ではありません。気になるときは眼科へ。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yorozu-craft.com/tameshite/roogan/">
+
+  <meta property="og:title" content="老眼チェック（広告なし）｜ためして">
+  <meta property="og:description" content="カードで画面の実寸を合わせて、近くの見え方・字の大きさ・赤緑を試す。広告なし・登録なし。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yorozu-craft.com/tameshite/roogan/">
+  <meta property="og:site_name" content="yorozu-craft">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://yorozu-craft.com/tameshite/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#8b4513" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1814" media="(prefers-color-scheme: dark)">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "老眼チェック",
+  "description": "カードで画面の実寸を合わせて、近点・字の大きさ・赤緑を試す。広告なし。医療の検査ではありません。",
+  "url": "https://yorozu-craft.com/tameshite/roogan/",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "ためして（耳・反射・目）",
+    "url": "https://yorozu-craft.com/tameshite/"
+  }
+}
+  </script>
+
+  <!-- 高齢者・親向けのページなので広告のスクリプトは読み込まない（ROADMAP D118・企画書 39 の D159）。所有確認の meta だけ残す -->
+  <meta name="google-adsense-account" content="ca-pub-5375267956079717">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="play-page">
+
+  <header class="app-header">
+    <p class="crumb"><a href="../">ためして（耳・反射・目）</a></p>
+    <h1>老眼チェック</h1>
+    <p class="subtitle">近くの見え方をスマホで試す。① から順に。</p>
+  </header>
+
+  <main class="app-main">
+    <p class="noad">このページは広告なし・登録なし・入力は端末の外に出ません。</p>
+    <p class="caution">これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。</p>
+
+    <div class="tabs" role="tablist" aria-label="チェックの種類">
+      <button type="button" role="tab" id="tab-fit" aria-controls="p-fit" aria-selected="true">① 画面合わせ</button>
+      <button type="button" role="tab" id="tab-near" aria-controls="p-near" aria-selected="false">② 近くの見え方</button>
+      <button type="button" role="tab" id="tab-size" aria-controls="p-size" aria-selected="false">③ 字の大きさ</button>
+      <button type="button" role="tab" id="tab-rg" aria-controls="p-rg" aria-selected="false">④ 赤と緑</button>
+    </div>
+
+    <section class="card panel" id="p-fit" role="tabpanel" aria-labelledby="tab-fit">
+      <h2>① 画面の大きさをカードで合わせる</h2>
+      <p class="small">カードを青い枠に縦に重ね、横幅を合わせます。</p>
+      <div class="fit-row">
+        <button type="button" class="btn btn-sub btn-sm" id="fit-minus" aria-label="小さく">−</button>
+        <input type="range" id="fit-range" min="2" max="12" step="0.01" aria-label="枠の大きさ">
+        <button type="button" class="btn btn-sub btn-sm" id="fit-plus" aria-label="大きく">＋</button>
+      </div>
+      <p class="start-row"><button type="button" class="btn btn-big" id="fit-save">この大きさで決める</button></p>
+      <p class="scale-state" id="scale-state" aria-live="polite"></p>
+      <div class="card-fit"><div class="card-shape" id="card-shape"><span>カードの短い辺</span></div></div>
+      <details class="rels"><summary>カードが無いとき・うまく合わないとき</summary>
+        <p class="small">定規があれば、青い枠の横幅が 5.4 cm（53.98 mm）になるように合わせても同じです。拡大表示（ピンチ）をしていると合いません。</p>
+      </details>
+    </section>
+
+    <section class="card panel" id="p-near" role="tabpanel" aria-labelledby="tab-near" hidden>
+      <h2>② 近くの見え方（ぼやけ始める距離）</h2>
+      <ol class="steps">
+        <li>遠くを見るめがねは、つけたまま。</li>
+        <li>字を見ながら画面を目に近づける。</li>
+        <li>ぼやけ始めた所で止め、目までを測る。</li>
+      </ol>
+      <p class="target" id="near-target" aria-label="見る字">あさがお 3689</p>
+      <div class="field inline-field">
+        <label for="near-cm">ぼやけ始めた距離</label>
+        <input type="number" id="near-cm" inputmode="decimal" min="5" max="200" step="0.5" placeholder="例：30"> cm
+        <button type="button" class="btn" id="near-save">記録する</button>
+      </div>
+      <p class="small">カードの長い辺は約 8.6 cm。</p>
+    </section>
+
+    <section class="card panel" id="p-size" role="tabpanel" aria-labelledby="tab-size" hidden>
+      <h2>③ 読める一番小さい字</h2>
+      <div class="field inline-field">
+        <label for="size-cm">画面から目まで</label>
+        <input type="number" id="size-cm" inputmode="decimal" min="5" max="200" step="1" value="30"> cm に離して
+      </div>
+      <fieldset class="size-rows" id="size-rows"><legend class="visually-hidden">読める一番小さい行</legend></fieldset>
+      <p class="start-row"><button type="button" class="btn" id="size-save">選んだ行を記録する</button></p>
+    </section>
+
+    <section class="card panel" id="p-rg" role="tabpanel" aria-labelledby="tab-rg" hidden>
+      <h2>④ 赤と緑、どちらがくっきり？</h2>
+      <p class="small">読む距離で黒い輪と字を比べる。</p>
+      <div class="duo" aria-hidden="true">
+        <div class="r"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="#000" stroke-width="3"/><circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="3"/><circle cx="50" cy="50" r="16" fill="none" stroke="#000" stroke-width="3"/></svg><span class="txt">あ 8 9</span></div>
+        <div class="g"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="#000" stroke-width="3"/><circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="3"/><circle cx="50" cy="50" r="16" fill="none" stroke="#000" stroke-width="3"/></svg><span class="txt">あ 8 9</span></div>
+      </div>
+      <div class="ans-row">
+        <button type="button" class="btn btn-sub" data-rg="red">赤の側</button>
+        <button type="button" class="btn btn-sub" data-rg="same">同じくらい</button>
+        <button type="button" class="btn btn-sub" data-rg="green">緑の側</button>
+      </div>
+    </section>
+
+    <section class="card result-card" id="result-card" tabindex="-1" aria-labelledby="h-result">
+      <h2 id="h-result">結果</h2>
+      <div id="result-main" aria-live="polite">
+        <p class="result-big" id="result">—</p>
+        <p class="result-sub" id="result-sub">記録するとここに出ます。</p>
+      </div>
+      <p class="small">見え方が気になるときは眼科へ。<a href="./guide.html">根拠</a></p>
+    </section>
+
+    <details class="card opt" id="rec-box">
+      <summary>記録: <span class="opt-state" id="rec-state">まだありません</span></summary>
+      <table class="rec-table" id="rec-table"></table>
+      <p class="small">記録はこの端末のブラウザ（localStorage、キー <code>tameshite_records</code>）にだけ保存され、外部には送信されません。書き出し・読み込み・消去はここのボタンから。</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-sub btn-sm" id="rec-export">ファイルに書き出す</button>
+        <button type="button" class="btn btn-sub btn-sm" id="rec-import">ファイルから読み込む</button>
+        <button type="button" class="btn btn-sub btn-sm" id="rec-reset">記録を消す</button>
+      </div>
+      <input type="file" id="rec-file" accept=".json,application/json" hidden>
+      <p id="rec-msg" class="small" aria-live="polite"></p>
+    </details>
+
+    <p class="small center"><a href="./guide.html">使い方・根拠・よくある質問</a></p>
+  </main>
+
+  <footer class="app-footer">
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <ul>
+        <li><a href="../../">yorozu-craft トップ</a></li>
+        <li><a href="../">ためして</a></li>
+        <li><a href="./guide.html">使い方</a></li>
+        <li><a href="../../about.html">運営者情報</a></li>
+        <li><a href="../../privacy-policy.html">プライバシーポリシー</a></li>
+      </ul>
+    </nav>
+    <p>&copy; 2026 yorozu-craft. All rights reserved.</p>
+  </footer>
+
+  <script src="../calc.js"></script>
+  <script src="../common.js"></script>
+  <script src="./roogan.js"></script>
+  <!-- Cloudflare Web Analytics（Cookie を使わないアクセス解析） --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b79bf821e1fd4b6683866d493b1de426"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
