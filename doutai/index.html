@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>動体視力テスト｜横切る数字を読む・14段階（ゲーム）｜ためして</title>
+  <meta name="description" content="画面を横切る数字を読んで答える動体視力のゲーム。段が上がるほど速くなり（2.0秒→0.15秒で横切る）、2回まちがえたら終わり。記録はこの端末だけ。医療の検査ではありません。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yorozu-craft.com/tameshite/doutai/">
+
+  <meta property="og:title" content="動体視力テスト｜ためして">
+  <meta property="og:description" content="横切る数字を読む。14段階で速くなる動体視力のゲーム。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yorozu-craft.com/tameshite/doutai/">
+  <meta property="og:site_name" content="yorozu-craft">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://yorozu-craft.com/tameshite/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#8b4513" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1814" media="(prefers-color-scheme: dark)">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "動体視力テスト",
+  "description": "画面を横切る数字を読んで答える。14段階。医療の検査ではありません。",
+  "url": "https://yorozu-craft.com/tameshite/doutai/",
+  "applicationCategory": "EntertainmentApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "ためして（耳・反射・目）",
+    "url": "https://yorozu-craft.com/tameshite/"
+  }
+}
+  </script>
+
+  <!-- Google AdSense: 画面を見て押す遊びの画面なので meta（サイト所有確認）だけ。広告は使い方ページ（guide.html）に出す（企画書 39・D158） -->
+  <meta name="google-adsense-account" content="ca-pub-5375267956079717">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="play-page">
+
+  <header class="app-header">
+    <p class="crumb"><a href="../">ためして（耳・反射・目）</a></p>
+    <h1>動体視力テスト</h1>
+    <p class="subtitle">横切る数字を読んで押す。だんだん速くなります。記録はこの端末だけ。</p>
+  </header>
+
+  <main class="app-main">
+    <p class="caution">これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。</p>
+
+    <p class="start-row" id="start-row"><button type="button" class="btn btn-big" id="start">スタート</button></p>
+    <div class="stage" id="stage" aria-describedby="stage-status">
+      <span id="stage-msg"><span class="big">動く数字を読む</span><span class="sub">1〜9 のどれかが左右から横切ります</span></span>
+      <span class="mover" id="mover" hidden aria-hidden="true"></span>
+    </div>
+    <p class="status" id="stage-status" aria-live="polite">2 回まちがえたら終わりです。</p>
+    <div class="keypad" id="keypad" hidden aria-label="見えた数字">
+      <button type="button" data-d="1">1</button><button type="button" data-d="2">2</button><button type="button" data-d="3">3</button>
+      <button type="button" data-d="4">4</button><button type="button" data-d="5">5</button><button type="button" data-d="6">6</button>
+      <button type="button" data-d="7">7</button><button type="button" data-d="8">8</button><button type="button" data-d="9">9</button>
+    </div>
+
+    <section class="card result-card" id="result-card" tabindex="-1" aria-labelledby="h-result">
+      <h2 id="h-result">結果</h2>
+      <div id="result-main" aria-live="polite">
+        <p class="result-big" id="result">—</p>
+        <p class="result-sub" id="result-sub">正解した一番速い段が出ます。</p>
+      </div>
+      <p class="small">画面の大きさと書き換えの速さ（1 秒に何回）で見え方が変わります。<a href="./guide.html">くわしくは使い方</a></p>
+    </section>
+
+    <details class="card opt" id="rec-box">
+      <summary>記録: <span class="opt-state" id="rec-state">まだありません</span></summary>
+      <table class="rec-table" id="rec-table"></table>
+      <p class="small">記録はこの端末のブラウザ（localStorage、キー <code>tameshite_records</code>）にだけ保存され、外部には送信されません。書き出し・読み込み・消去はここのボタンから。</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-sub btn-sm" id="rec-export">ファイルに書き出す</button>
+        <button type="button" class="btn btn-sub btn-sm" id="rec-import">ファイルから読み込む</button>
+        <button type="button" class="btn btn-sub btn-sm" id="rec-reset">記録を消す</button>
+      </div>
+      <input type="file" id="rec-file" accept=".json,application/json" hidden>
+      <p id="rec-msg" class="small" aria-live="polite"></p>
+    </details>
+
+    <p class="small center"><a href="./guide.html">使い方・結果の見方・よくある質問</a></p>
+  </main>
+
+  <footer class="app-footer">
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <ul>
+        <li><a href="../../">yorozu-craft トップ</a></li>
+        <li><a href="../">ためして</a></li>
+        <li><a href="./guide.html">使い方</a></li>
+        <li><a href="../../about.html">運営者情報</a></li>
+        <li><a href="../../privacy-policy.html">プライバシーポリシー</a></li>
+      </ul>
+    </nav>
+    <p>&copy; 2026 yorozu-craft. All rights reserved.</p>
+  </footer>
+
+  <script src="../calc.js"></script>
+  <script src="../common.js"></script>
+  <script src="./doutai.js"></script>
+  <!-- Cloudflare Web Analytics（Cookie を使わないアクセス解析） --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b79bf821e1fd4b6683866d493b1de426"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

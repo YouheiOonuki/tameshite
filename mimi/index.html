@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モスキート音テスト｜何Hzまで聞こえる？高い音の聞こえ（音量の上限つき）｜ためして</title>
+  <meta name="description" content="モスキート音（8,000〜20,000Hz）が何Hzまで聞こえるかをブラウザで試すテスト。音量に上限を付け、確認の音で端末の音量を小さく合わせてから始めます。年齢には換算しません。医療の検査ではありません。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yorozu-craft.com/tameshite/mimi/">
+
+  <meta property="og:title" content="モスキート音テスト｜何Hzまで聞こえる？｜ためして">
+  <meta property="og:description" content="高い音が何Hzまで聞こえるか。音量に上限つき、途中に無音の回を混ぜて答えを確かめます。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yorozu-craft.com/tameshite/mimi/">
+  <meta property="og:site_name" content="yorozu-craft">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://yorozu-craft.com/tameshite/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#8b4513" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1814" media="(prefers-color-scheme: dark)">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "モスキート音テスト",
+    "description": "高い音（8,000〜20,000Hz）が何Hzまで聞こえるかを試すテスト。音量に上限つき。医療の検査ではありません。",
+    "url": "https://yorozu-craft.com/tameshite/mimi/",
+    "applicationCategory": "EntertainmentApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+    "inLanguage": "ja",
+    "isPartOf": { "@type": "WebSite", "name": "ためして（耳・反射・目）", "url": "https://yorozu-craft.com/tameshite/" }
+  }
+  </script>
+
+  <!-- Google AdSense: 音を聞いて答える遊びの画面なので meta（サイト所有確認）だけ。広告は使い方ページ（guide.html）に出す（企画書 39・D158） -->
+  <meta name="google-adsense-account" content="ca-pub-5375267956079717">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="play-page">
+
+  <header class="app-header">
+    <p class="crumb"><a href="../">ためして（耳・反射・目）</a></p>
+    <h1>モスキート音テスト</h1>
+    <p class="subtitle">高い音が何 Hz まで聞こえるか。何も送信しません。</p>
+  </header>
+
+  <main class="app-main">
+    <p class="caution">これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。</p>
+
+    <section class="card" aria-label="鳴らす前に">
+      <ul class="warn">
+        <li>端末の音量を小さくしてから始める。イヤホンは耳から少し離して。</li>
+        <li><strong>聞こえなくても端末の音量は上げない</strong>（高い音は聞こえなくても鳴っています）。</li>
+        <li>スピーカーやイヤホンによっては高い音が出ません。そのときは耳ではなく機器の限界です。</li>
+      </ul>
+      <div class="btn-row">
+        <button type="button" class="btn btn-sub" id="check">① 確認の音（1,000 Hz）を鳴らす</button>
+      </div>
+      <p class="small">確認の音が「小さく聞こえる」くらいに端末の音量を合わせます。</p>
+    </section>
+
+    <p class="start-row"><button type="button" class="btn btn-big" id="start">② スタート</button></p>
+
+    <section class="card" id="test" hidden aria-labelledby="h-test">
+      <h2 id="h-test">聞こえましたか？</h2>
+      <p class="status" id="test-status" aria-live="polite"></p>
+      <div class="ans-row">
+        <button type="button" class="btn" id="yes">聞こえた</button>
+        <button type="button" class="btn btn-sub" id="no">聞こえない</button>
+      </div>
+      <p class="center"><button type="button" class="btn btn-sub btn-sm" id="again">もう一度鳴らす</button>
+        <button type="button" class="btn btn-sub btn-sm" id="stop">やめる</button></p>
+      <p class="small center">どの高さかは終わってから出します。途中で 1 回、音を出さない回があります。</p>
+    </section>
+
+    <section class="card result-card" id="result-card" tabindex="-1" aria-labelledby="h-result">
+      <h2 id="h-result">結果</h2>
+      <div id="result-main" aria-live="polite">
+        <p class="result-big" id="result">—</p>
+        <p class="result-sub" id="result-sub">スタートすると、聞こえた一番高い音がここに出ます。</p>
+      </div>
+      <p class="small">年齢には換算しません（端末から出る音の大きさが分からないため）。<a href="./guide.html">くわしくは使い方</a></p>
+    </section>
+
+    <details class="card opt" id="manual">
+      <summary>好きな高さを 1 つ鳴らす</summary>
+      <p class="small">音量は上と同じ上限です。</p>
+      <div class="freq-grid" id="freqs"></div>
+    </details>
+
+    <details class="card opt" id="rec-box">
+      <summary>記録: <span class="opt-state" id="rec-state">まだありません</span></summary>
+      <table class="rec-table" id="rec-table"></table>
+      <p class="small">記録はこの端末のブラウザ（localStorage、キー <code>tameshite_records</code>）にだけ保存され、外部には送信されません。書き出し・読み込み・消去はここのボタンから。</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-sub btn-sm" id="rec-export">ファイルに書き出す</button>
+        <button type="button" class="btn btn-sub btn-sm" id="rec-import">ファイルから読み込む</button>
+        <button type="button" class="btn btn-sub btn-sm" id="rec-reset">記録を消す</button>
+      </div>
+      <input type="file" id="rec-file" accept=".json,application/json" hidden>
+      <p id="rec-msg" class="small" aria-live="polite"></p>
+    </details>
+
+    <p class="small center"><a href="./guide.html">使い方・結果の見方・よくある質問</a></p>
+  </main>
+
+  <footer class="app-footer">
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <ul>
+        <li><a href="../../">yorozu-craft トップ</a></li>
+        <li><a href="../">ためして</a></li>
+        <li><a href="./guide.html">使い方</a></li>
+        <li><a href="../../about.html">運営者情報</a></li>
+        <li><a href="../../privacy-policy.html">プライバシーポリシー</a></li>
+      </ul>
+    </nav>
+    <p>&copy; 2026 yorozu-craft. All rights reserved.</p>
+  </footer>
+
+  <script src="../calc.js"></script>
+  <script src="../common.js"></script>
+  <script src="./mimi.js"></script>
+  <!-- Cloudflare Web Analytics（Cookie を使わないアクセス解析） --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b79bf821e1fd4b6683866d493b1de426"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

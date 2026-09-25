@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>__TITLE__｜yorozu-craft</title>
-  <meta name="description" content="__DESCRIPTION__">
+  <title>ためして（耳・反射・目）｜モスキート音・反射神経・動体視力・記憶力・老眼チェック｜yorozu-craft</title>
+  <meta name="description" content="ブラウザでできる体のセルフチェック 5 つ。モスキート音が何Hzまで聞こえるか、反射神経（ミリ秒）、動体視力、数字の記憶力、老眼チェック（カードで画面の実寸を合わせる）。記録は端末だけ。遊びの目安で、医療の検査ではありません。">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://yorozu-craft.com/__REPO__/">
+  <link rel="canonical" href="https://yorozu-craft.com/tameshite/">
 
-  <meta property="og:title" content="__TITLE__｜yorozu-craft">
-  <meta property="og:description" content="__DESCRIPTION__">
+  <meta property="og:title" content="ためして（耳・反射・目）｜yorozu-craft">
+  <meta property="og:description" content="モスキート音・反射神経・動体視力・記憶力・老眼チェック。記録は端末だけ。">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yorozu-craft.com/__REPO__/">
+  <meta property="og:url" content="https://yorozu-craft.com/tameshite/">
   <meta property="og:site_name" content="yorozu-craft">
   <meta property="og:locale" content="ja_JP">
-  <meta property="og:image" content="https://yorozu-craft.com/__REPO__/og-image.png">
+  <meta property="og:image" content="https://yorozu-craft.com/tameshite/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
@@ -22,115 +22,58 @@
   <meta name="theme-color" content="#1c1814" media="(prefers-color-scheme: dark)">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "__TITLE__",
-    "description": "__DESCRIPTION__",
-    "url": "https://yorozu-craft.com/__REPO__/",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "All",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
-    "inLanguage": "ja"
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ためして（耳・反射・目）",
+  "description": "モスキート音・反射神経・動体視力・記憶力・老眼のセルフチェック。遊びの目安で、医療の検査ではありません。",
+  "url": "https://yorozu-craft.com/tameshite/",
+  "applicationCategory": "EntertainmentApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}
   </script>
 
-  <!-- Google AdSense（サイト所有確認 + 広告配信スクリプト）。全画面で操作する画面なら script を消して meta だけ残す -->
+  <!-- Google AdSense（サイト所有確認 + 広告配信スクリプト）。一覧のページなので通常どおり。遊ぶ画面は meta だけ、老眼チェックは広告なし -->
   <meta name="google-adsense-account" content="ca-pub-5375267956079717">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5375267956079717"
      crossorigin="anonymous"></script>
 
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-  <!-- PWA-BEGIN -->
-  <link rel="manifest" href="./manifest.webmanifest">
-  <!-- PWA-END -->
-  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-  <!-- 上端の固定バー（SCREEN.md 1.1・D59）。結果が出て、結果が画面の外にあるときだけ screen.js が出す。読み込み時は hidden のまま。
-       2 カラム（下の layout-2col）にするなら class に fixbar-narrow も足す（PC では出さない）。
-       印刷物（設定 → 出力）なら中身を <button type="button">印刷する</button> にし、main.js で onClick を渡す -->
-  <div class="fixbar" id="fixbar" role="status" hidden>
-    <a href="#result-card"><span id="fixbar-text"></span> ▸ 結果へ</a>
-  </div>
+<body class="hub-page">
 
   <header class="app-header">
-    <h1>__TITLE__</h1>
-    <!-- 冒頭は制度 2 文・60 字、道具 1 文・40 字（WRITING.md 1 章）。時点と「外部に送信しない」をここに -->
-    <p class="subtitle">__DESCRIPTION__ 入力は外部に送信しません。</p>
+    <h1>ためして（耳・反射・目）</h1>
+    <p class="subtitle">耳・反射・目をブラウザで試す 5 つのテスト。記録はこの端末だけ。</p>
   </header>
 
-  <!-- 画面の骨組み「入力 → 結果」（yorozu-plans の docs/SCREEN.md 1.1。README「ツールを追加するとき」25）。
-       順番は 1 必須の入力 → 2 結果 → 3 くわしく入れる → 4 保存・書き出し → 5 使い方へのリンク。1 と 2 の間に段落・見出しを挟まない。
-       制度の計算機で PC を 2 カラムにするなら class に layout-2col を足す -->
   <main class="app-main">
-    <form id="form" autocomplete="off" onsubmit="return false">
+    <p class="caution">これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。</p>
 
-      <!-- 1 必須の入力: 空だと結果が出ない項目だけ（制度 6・道具 3・印刷物 4 まで）。h2 は付けず legend。数値の既定は空欄＋ placeholder -->
-      <fieldset class="card req">
-        <legend>金額</legend>
-        <div class="field">
-          <label for="amount">金額（円）</label>
-          <input type="number" id="amount" inputmode="numeric" placeholder="例：1234">
-        </div>
-      </fieldset>
-
-      <!-- 2 結果: 大きな数字 1 つ＋ 1 行（aria-live）。内訳は details.rels。下に免責 1 文と、ほかのツールへの導線 1〜2 行（README 21） -->
-      <section class="card result-card" id="result-card" tabindex="-1" aria-labelledby="h-result">
-        <h2 id="h-result">結果</h2>
-        <div id="result-main" aria-live="polite">
-          <p class="result-big" id="result">—</p>
-          <p class="result-sub" id="result-sub">金額を入れると出ます。</p>
-        </div>
-        <details class="rels">
-          <summary>内訳と途中の計算</summary>
-          <p class="small" id="result-detail">—</p>
-        </details>
-        <p class="small">この計算は目安です。</p>
-      </section>
-
-      <!-- 3 くわしく入れる: 一部の人だけの項目。グループごとに 1 つの details。summary の .opt-state に今の状態（main.js の detailsSummary）。
-           開いた状態は保存しない。道具で任意の項目が無ければ、この節ごと消す -->
-      <div class="opts">
-        <details class="card opt" id="opt-unit">
-          <summary>端数の単位: <span class="opt-state">100 円</span></summary>
-          <div class="field">
-            <label for="unit">切り上げる単位</label>
-            <select id="unit">
-              <option value="100" selected>100 円</option>
-              <option value="1000">1,000 円</option>
-            </select>
-          </div>
-        </details>
-      </div>
-    </form>
-
-    <!-- 4 保存・書き出し（README「ツールを追加するとき」20。定型 2 文＋ボタン） -->
-    <details class="card opt no-print" id="file-box">
-      <summary>入力の保存・書き出し</summary>
-      <p class="small">入力内容はこの端末のブラウザ（localStorage、キー <code>__REPO___draft</code>）にだけ保存され、外部には送信されません。書き出し・読み込みはこの画面のボタンから。</p>
-      <div class="btn-row">
-        <button type="button" id="share" class="btn">結果を開くリンクをコピー</button>
-        <button type="button" id="backup-export" class="btn">ファイルに書き出す</button>
-        <button type="button" id="backup-import" class="btn">ファイルから読み込む</button>
-      </div>
-      <input type="file" id="backup-file" accept=".json,application/json" hidden>
-      <p id="backup-msg" class="small" aria-live="polite"></p>
-    </details>
-
-    <!-- 5 使い方へのリンク（1 行） -->
-    <p class="small"><a href="./guide.html">使い方・根拠・よくある質問</a></p>
-
+    <ul class="tools">
+      <li><a href="./mimi/"><span class="t">モスキート音テスト</span><span class="d">高い音が何 Hz まで聞こえるか。音量に上限つき、年齢には換算しません。</span></a></li>
+      <li><a href="./hansha/"><span class="t">反射神経テスト</span><span class="d">緑に変わったらタップ。5 回の中央値をミリ秒で。定規の換算つき。</span></a></li>
+      <li><a href="./doutai/"><span class="t">動体視力テスト</span><span class="d">横切る数字を読んで押す。14 段でだんだん速く。</span></a></li>
+      <li><a href="./kioku/"><span class="t">記憶力テスト</span><span class="d">1 つずつ出る数字を覚えて答える。何けたまで？</span></a></li>
+      <li><a href="./roogan/"><span class="t">老眼チェック（広告なし）</span><span class="d">カードで画面の実寸を合わせて、近くの見え方・字の大きさ・赤緑。</span></a></li>
+    </ul>
+    <p class="small">記録はこの端末のブラウザにだけ保存します（キーは <code>tameshite_</code> で始まる）。</p>
   </main>
 
   <footer class="app-footer">
     <nav class="footer-nav" aria-label="フッターナビゲーション">
       <ul>
         <li><a href="../">yorozu-craft トップ</a></li>
-        <li><a href="./" aria-current="page">__TITLE__</a></li>
-        <li><a href="./guide.html">使い方・よくある質問</a></li>
+        <li><a href="./" aria-current="page">ためして</a></li>
         <li><a href="../about.html">運営者情報</a></li>
         <li><a href="../privacy-policy.html">プライバシーポリシー</a></li>
       </ul>
@@ -138,10 +81,12 @@
     <p>&copy; 2026 yorozu-craft. All rights reserved.</p>
   </footer>
 
-  <script src="./constants.js"></script>
-  <script src="./screen.js"></script>
-  <script src="./calc.js"></script>
-  <script src="./main.js"></script>
+  <script>
+    // オフラインでも開けるように（README 13: './sw.js' だけで登録。scope を指定しない）
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      addEventListener('load', function () { navigator.serviceWorker.register('./sw.js').catch(function () {}); });
+    }
+  </script>
   <!-- Cloudflare Web Analytics（Cookie を使わないアクセス解析） --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b79bf821e1fd4b6683866d493b1de426"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

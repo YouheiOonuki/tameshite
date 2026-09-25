@@ -1,94 +1,51 @@
-# __TITLE__
+# ためして（耳・反射・目）
 
-公開 URL: **https://yorozu-craft.com/__REPO__/**
+公開 URL: **https://yorozu-craft.com/tameshite/**
 
-__DESCRIPTION__
+モスキート音・反射神経・動体視力・記憶力・老眼のセルフチェック。遊びの目安で、医療の検査ではありません。
 yorozu-craft のツールの1つです（共通ルールは [youheioonuki.github.io の README](https://github.com/YouheiOonuki/youheioonuki.github.io) を参照）。
-
-<!-- TEMPLATE-BEGIN -->
-## テンプレートの使い方（`tools/init.mjs` を実行すると、この節は消えます）
-
-yorozu-craft の新しいツールの雛形です。サイト共通の決まり（youheioonuki.github.io の README「ツールを追加するとき」）のうち、ファイルで守れるものは最初から入れてあります。
-
-1. GitHub で「Use this template」→ リポジトリ名は短いローマ字＋種類（例: `loan-sim`）。URL になる
-2. クローンして、初期化スクリプトを 1 回だけ実行する（Node 20 以上）
-
-   ```sh
-   node tools/init.mjs loan-sim "住宅ローン 返済シミュレーター" "毎月の返済額と総返済額をすぐ計算。" --pwa
-   ```
-
-   - `__REPO__`・`__TITLE__`・`__DESCRIPTION__`・日付を置き換える
-   - `--pwa` を付けないと、オフライン対応の部分（`sw.js`・`manifest.webmanifest`・`PWA-BEGIN`〜`PWA-END`）を消す
-   - README のこの節と `tools/init.mjs` 自身を消す
-3. `node --test tests/*.test.js` が通ることを確かめてからコミット
-4. 残りは youheioonuki.github.io の README「ツールを追加するとき」の手順どおり（Pages の公開と Enforce HTTPS、トップの一覧・robots.txt・URL 表への追加など）
-
-最初から入っているもの:
-
-| 決まり | 入っている場所 |
-|-------|---------------|
-| canonical・OGP・AdSense・Cloudflare ビーコン | `index.html`・`guide.html` の `<head>` と `</body>` 直前 |
-| 共通ページへの相対リンク（`../about.html`・`../privacy-policy.html`） | 各ページのフッター |
-| ツール配下の 404 | `404.html`（youheioonuki.github.io のものと同じ） |
-| 保存キーの接頭辞 `<リポジトリ名>_`・try/catch | `main.js` の `store` |
-| 共有 URL は `#s=` | `main.js` の `toShareHash` / `fromShareHash` |
-| 保存内容を JSON ファイルに書き出し・読み込み（`{tool, version, exportedAt, data}`。読み込み時は `tool` を確かめ、正規化してから確認のうえ上書き） | `calc.js` の `backupFileName` / `buildBackup` / `parseBackup`、`main.js` の書き出し・読み込み、`index.html` のボタン、`tests/backup.test.js` |
-| SW のキャッシュ名の接頭辞・自分のパスだけ扱う・`./sw.js` で登録 | `sw.js`・`main.js` |
-| manifest の `id` は `/<リポジトリ名>/` | `manifest.webmanifest` |
-| 使い方ページは `guide.html`（注意・データの扱い・根拠と確認日・更新履歴の節つき） | `guide.html` |
-| 要望・不具合の報告フォーム（全ツール共通の Google フォーム。リポジトリ名が入った状態で開く） | `guide.html` の「ご利用上の注意・データの扱い」 |
-| 時点のある値は値・出典・確認日をセットで 1 か所に | `constants.js`（テストで出典と確認日の書き忘れを検出） |
-| 計算は画面から切り離した純粋関数＋テスト | `calc.js`・`tests/`・`.github/workflows/test.yml` |
-| 端末のフォント・ダークモード | `style.css` |
-| 画面の骨組み「入力 → 結果」（必須の入力 1 つの `fieldset` → 結果 → くわしく入れる `details` → 保存・書き出し → 使い方へのリンク） | `index.html`（各節にコメント） |
-| 上端の固定バー・`summary` の状態表示・PC の 2 カラム・印刷で広告と固定バーを消す | `screen.js`・`style.css` の「画面の骨組み」・`main.js` の `bar` |
-| MIT ライセンス | `LICENSE` |
-
-画面の部品の使い方（yorozu-plans の `docs/SCREEN.md`。youheioonuki.github.io の README「ツールを追加するとき」25）:
-
-- **必須の入力と結果**: `index.html` の `fieldset.card.req`（見出しは `legend`）の直後に `section.result-card`。大きな数字は `.result-big`、内訳は `details.rels`。入力と結果の間に段落や見出しを置かない
-- **くわしく入れる**: 1 グループ 1 つの `<details class="card opt" id="opt-…">`。`summary` の中に `<span class="opt-state">` を置き、計算のたびに `YorozuScreen.detailsSummary({ 'opt-…': '今の状態' })`。道具で任意の項目が無ければ `.opts` ごと消す
-- **固定バー**: `YorozuScreen.fixedBar({ bar, watch, jump, text })` の戻り値の `set('数字 1 つ')` を計算のたびに呼ぶ（空文字なら出さない）。結果が画面内にあれば出ない。印刷物では `watch` を印刷ボタンの行にし、バーの中身を `<button>`、`onClick` で印刷を呼ぶ
-- **PC の 2 カラム**（制度の計算機だけ）: `<main class="app-main layout-2col">` と、固定バーに `fixbar-narrow` を足す
-- **印刷**: `style.css` の `@media print` で固定バー・`.no-print`・広告（`ins.adsbygoogle` など）を消し、折りたたみの中は出す。印刷物のツールは用紙の CSS をこの下に足す
-- 公開前に yorozu-plans の `tools/ui/measure_fold.cjs`（位置）と `tools/writing/measure.py`（字数）で「要修正」が無いことを確かめる
-
-差し替えが必要なもの: `favicon.svg`・`apple-touch-icon.png`（180×180）・`og-image.png`（1200×630）は仮の絵なので、ツールに合わせて作り直す。
-<!-- TEMPLATE-END -->
 
 ## 機能
 
-- （できることを箇条書きで）
-- 入力内容はこの端末のブラウザにだけ保存し、外部には送信しない
+体を測る 5 つのテスト（企画書 yorozu-plans `docs/39_ためして.md`、候補 K94・K95・K115）。どのページも本文の最初に「これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。」を固定（WRITING 2 章）。
 
-## 計算の仕様・根拠
+| パス | テスト | 広告 |
+|---|---|---|
+| `/tameshite/` | 一覧 | 通常（スクリプトあり） |
+| `/mimi/` | モスキート音テスト（K94）: 8,000〜20,000 Hz を低い順に鳴らし「聞こえない」で終わる。途中に無音の回を 1 回。音量はゲイン 0.03 に固定（上げる操作なし）、0.1 秒の立ち上がり・消え際。年齢には換算しない | 画面は meta だけ・使い方は通常 |
+| `/hansha/` | 反射神経（K95）: 緑になったらタップ、5 回の中央値。100 ms 未満・合図の前はやり直し。定規の落下距離 → 時間の換算 | 同上 |
+| `/doutai/` | 動体視力（K95）: 1〜9 が 2.0〜0.15 秒で横切る 14 段、2 回まちがえたら終わり | 同上 |
+| `/kioku/` | 記憶力（K95）: 1 秒に 1 つ出る数字を同じ順番・逆から。3〜12 けた | 同上 |
+| `/roogan/` | 老眼チェック（K115・高齢者向け）: カード（ID-1 の短い辺 53.98 mm）で画面の実寸を合わせ、近点・読める字の大きさ・赤緑 | **広告なし**（画面・使い方とも meta だけ。D118）。先頭に「このページは広告なし・登録なし・入力は端末の外に出ません。」 |
 
-（計算式、使っている値と出典。値は `constants.js` にまとめ、画面の「根拠と確認日」にも出す）
+- 記録は `tameshite_records`、画面の実寸は `tameshite_scale`（localStorage）。書き出し・読み込み（`tameshite-backup-YYYYMMDD.json`）と消去は各テストの「記録」から。外部には送信しない
+- オフライン: `sw.js`（キャッシュ `tameshite-v1`）
+
+## 使っている事実と出典
+
+`constants.js` の `SOURCES`（確認日 `CHECKED`）に 1 か所で持つ。耳鼻咽喉科学会（加齢で高い音から）、W3C Web Audio（ナイキスト周波数）、MDN（performance.now の丸め）、BIPM（標準重力加速度 980.665 cm/s²）、日本眼科学会・日本眼科医会（老視）、アキュビュー（セルフチェックの前提）、眼科院長ブログ（赤緑の原理）、ISO/IEC 7810 ID-1（寸法は EU 決定 S2 で確認）、W3C CSS（1in = 96px、1pt = 1/72in）。年齢・平均の目安は、確かな出典が無いので出さない。
 
 ## 保守
 
 | 時期 | 確認すること | 直す場所 |
 |------|------------|---------|
-| （例: 毎年4月ごろ） | （例: 料率の改定） | `constants.js`、`guide.html` の最終確認日 |
+| 確認日から 12 か月まで（check-site のメモで） | 出典のページが変わっていないか | `constants.js` の `CHECKED`、各 `guide.html` の最終確認日 |
+| ファイルを足したとき | オフラインの一覧 | `sw.js` の `PRECACHE_URLS` と `CACHE_NAME`、`tests/pages.test.js` |
 
-値や計算を直したら、`guide.html` の「更新履歴」に日付と内容を 1 行足す。
+値や文を直したら、その `guide.html` の「更新履歴」に日付と内容を 1 行足す。
 
 ## ファイル
 
 | ファイル | 役割 |
 |---------|------|
-| `index.html` | ツール本体 |
-| `guide.html` | 使い方・根拠と確認日・よくある質問・ご利用上の注意・更新履歴 |
-| `calc.js` | 計算ロジック（画面から切り離した純粋関数） |
-| `constants.js` | 時点のある値（値・出典・確認日） |
-| `main.js` | 画面の制御・保存・共有リンク |
-| `screen.js` | 画面の部品（上端の固定バー、`details` の `summary` の状態表示） |
-| `style.css` | 見た目（和紙風の配色、ダークモード対応） |
-| `sw.js` / `manifest.webmanifest` | オフライン対応（使う場合のみ） |
-| `404.html` | ツール配下の存在しない URL で出るページ（サイト共通のもの） |
-| `favicon.svg` / `apple-touch-icon.png` / `og-image.png` | アイコン / ホーム画面用アイコン / SNS 共有用画像（1200×630） |
-| `sitemap.xml` | サイトマップ（robots.txt はドメイン直下で管理） |
-| `tests/*.test.js` | テスト（`node --test tests/*.test.js`。`.github/workflows/test.yml` で push・PR のたびに自動実行） |
+| `index.html` | 一覧 |
+| `<テスト>/index.html`・`<テスト>/<テスト>.js`・`<テスト>/guide.html` | 各テストの画面・動き・使い方 |
+| `calc.js` | 判定・集計・換算・記録の正規化（純粋関数） |
+| `common.js` | 保存・記録・書き出し・読み込み・Service Worker |
+| `constants.js` | 出典と確認日 |
+| `style.css` | 見た目（ダークモード対応） |
+| `sw.js` / `manifest.webmanifest` | オフライン対応 |
+| `tests/*.test.js` | `node --test tests/*.test.js` |
 
 ## ライセンス
 

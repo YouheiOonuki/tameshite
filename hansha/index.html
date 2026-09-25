@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>反射神経テスト｜色が変わったらタップ・5回の中央値をミリ秒で（定規の換算つき）｜ためして</title>
+  <meta name="description" content="画面の色が変わった瞬間にタップして、反応の時間をミリ秒で測る反射神経テスト。5回の中央値・平均・最速を出し、先読みはやり直し。定規でためす方法の換算表つき。記録はこの端末だけ。医療の検査ではありません。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yorozu-craft.com/tameshite/hansha/">
+
+  <meta property="og:title" content="反射神経テスト｜ためして">
+  <meta property="og:description" content="色が変わったらタップ。5回の中央値をミリ秒で。定規の換算表つき。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yorozu-craft.com/tameshite/hansha/">
+  <meta property="og:site_name" content="yorozu-craft">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://yorozu-craft.com/tameshite/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#8b4513" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1814" media="(prefers-color-scheme: dark)">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "反射神経テスト",
+  "description": "画面の色が変わった瞬間にタップして反応の時間を測る。5回の中央値。医療の検査ではありません。",
+  "url": "https://yorozu-craft.com/tameshite/hansha/",
+  "applicationCategory": "EntertainmentApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "ためして（耳・反射・目）",
+    "url": "https://yorozu-craft.com/tameshite/"
+  }
+}
+  </script>
+
+  <!-- Google AdSense: 画面を見て押す遊びの画面なので meta（サイト所有確認）だけ。広告は使い方ページ（guide.html）に出す（企画書 39・D158） -->
+  <meta name="google-adsense-account" content="ca-pub-5375267956079717">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="play-page">
+
+  <header class="app-header">
+    <p class="crumb"><a href="../">ためして（耳・反射・目）</a></p>
+    <h1>反射神経テスト</h1>
+    <p class="subtitle">緑に変わったらすぐタップ。5 回の中央値を出します。記録はこの端末だけ。</p>
+  </header>
+
+  <main class="app-main">
+    <p class="caution">これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。</p>
+
+    <button type="button" class="stage" id="stage" aria-describedby="stage-status">
+      <span><span class="big" id="stage-big">スタート</span><span class="sub" id="stage-sub">ここをタップ（キーボードはスペース）</span></span>
+    </button>
+    <p class="status" id="stage-status" aria-live="polite">赤いあいだは待って、緑になったらすぐ押します。</p>
+
+    <section class="card result-card" id="result-card" tabindex="-1" aria-labelledby="h-result">
+      <h2 id="h-result">結果</h2>
+      <div id="result-main" aria-live="polite">
+        <p class="result-big" id="result">—</p>
+        <p class="result-sub" id="result-sub">5 回押すと、中央値（真ん中の値）が出ます。</p>
+      </div>
+      <p class="small">画面が色を出すまでと、タップが届くまでの遅れも入った時間です。<a href="./guide.html">くわしくは使い方</a></p>
+    </section>
+
+    <details class="card opt" id="ruler">
+      <summary>定規でためす（落ちた長さ → 時間）</summary>
+      <p class="small">相手が離した 30 cm 定規を、親指と人差し指でつかみます。落ちた長さを入れると時間に直します（空気の抵抗は無視）。</p>
+      <div class="field inline-field">
+        <label for="ruler-cm">落ちた長さ</label>
+        <input type="number" id="ruler-cm" inputmode="decimal" min="0" max="100" step="0.5" placeholder="例：15"> cm
+        <strong id="ruler-ms" aria-live="polite">—</strong>
+      </div>
+      <table class="rec-table" id="ruler-table"></table>
+    </details>
+
+    <details class="card opt" id="rec-box">
+      <summary>記録: <span class="opt-state" id="rec-state">まだありません</span></summary>
+      <table class="rec-table" id="rec-table"></table>
+      <p class="small">記録はこの端末のブラウザ（localStorage、キー <code>tameshite_records</code>）にだけ保存され、外部には送信されません。書き出し・読み込み・消去はここのボタンから。</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-sub btn-sm" id="rec-export">ファイルに書き出す</button>
+        <button type="button" class="btn btn-sub btn-sm" id="rec-import">ファイルから読み込む</button>
+        <button type="button" class="btn btn-sub btn-sm" id="rec-reset">記録を消す</button>
+      </div>
+      <input type="file" id="rec-file" accept=".json,application/json" hidden>
+      <p id="rec-msg" class="small" aria-live="polite"></p>
+    </details>
+
+    <p class="small center"><a href="./guide.html">使い方・結果の見方・よくある質問</a></p>
+  </main>
+
+  <footer class="app-footer">
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <ul>
+        <li><a href="../../">yorozu-craft トップ</a></li>
+        <li><a href="../">ためして</a></li>
+        <li><a href="./guide.html">使い方</a></li>
+        <li><a href="../../about.html">運営者情報</a></li>
+        <li><a href="../../privacy-policy.html">プライバシーポリシー</a></li>
+      </ul>
+    </nav>
+    <p>&copy; 2026 yorozu-craft. All rights reserved.</p>
+  </footer>
+
+  <script src="../calc.js"></script>
+  <script src="../common.js"></script>
+  <script src="./hansha.js"></script>
+  <!-- Cloudflare Web Analytics（Cookie を使わないアクセス解析） --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b79bf821e1fd4b6683866d493b1de426"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -1,8 +1,8 @@
 {
-  "id": "/__REPO__/",
-  "name": "__TITLE__｜yorozu-craft",
-  "short_name": "__TITLE__",
-  "description": "__DESCRIPTION__",
+  "id": "/tameshite/",
+  "name": "ためして（耳・反射・目）｜yorozu-craft",
+  "short_name": "ためして",
+  "description": "モスキート音・反射神経・動体視力・記憶力・老眼のセルフチェック。遊びの目安で、医療の検査ではありません。",
   "lang": "ja",
   "start_url": "./",
   "scope": "./",

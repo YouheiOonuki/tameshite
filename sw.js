@@ -1,30 +1,43 @@
 /**
- * __TITLE__ - sw.js（Service Worker。オフライン対応にするツールだけ使う）
+ * ためして（耳・反射・目） - sw.js（Service Worker。オフライン対応にするツールだけ使う）
  * hoshizora-sanpo の sw.js と同じ方針:
  * - ネットワーク優先。オンラインなら常に最新を取得してキャッシュも更新し、オフライン（または応答が遅い）ときだけキャッシュを返す
  * - yorozu-craft.com の各ツールは同じオリジンでキャッシュ領域を共有するため、
- *   キャッシュ名には必ず "__REPO__-" を付け、ほかのツールのキャッシュには触れない
+ *   キャッシュ名には必ず "tameshite-" を付け、ほかのツールのキャッシュには触れない
  * - 自分のパス配下だけを扱う。広告・アクセス解析など別オリジンや、ほかのツールのファイルは横取りしない
  */
 
 'use strict';
 
-const CACHE_PREFIX = '__REPO__-';
+const CACHE_PREFIX = 'tameshite-';
 const CACHE_NAME   = `${CACHE_PREFIX}v1`; // キャッシュする中身の構成を変えたら上げる
 
 /** 初回インストール時に取得しておくファイル */
 const PRECACHE_URLS = [
   './',
   './index.html',
-  './guide.html',
   './style.css',
-  './constants.js',
   './calc.js',
-  './screen.js',
-  './main.js',
+  './common.js',
+  './constants.js',
   './manifest.webmanifest',
   './favicon.svg',
   './apple-touch-icon.png',
+  './mimi/',
+  './mimi/mimi.js',
+  './mimi/guide.html',
+  './hansha/',
+  './hansha/hansha.js',
+  './hansha/guide.html',
+  './doutai/',
+  './doutai/doutai.js',
+  './doutai/guide.html',
+  './kioku/',
+  './kioku/kioku.js',
+  './kioku/guide.html',
+  './roogan/',
+  './roogan/roogan.js',
+  './roogan/guide.html',
 ];
 
 /** この時間ネットワークが応答しなければ、キャッシュがあればそちらを返す */
