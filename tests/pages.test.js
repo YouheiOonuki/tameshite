@@ -141,10 +141,10 @@ test('耳: Web Audio の音量はゲインの上限（TONE_GAIN）だけを使�
   assert.doesNotMatch(s, /getUserMedia/);   // マイクは使わない
 });
 
-test('Service Worker: キャッシュ名は tameshite-v1、先読みするファイルはすべてある、manifest の id は /tameshite/', () => {
+test('Service Worker: キャッシュ名は tameshite-v2、先読みするファイルはすべてある、manifest の id は /tameshite/', () => {
   const sw = read('sw.js');
   assert.match(sw, /const CACHE_PREFIX = 'tameshite-';/);
-  assert.match(sw, /const CACHE_NAME {3}= `\$\{CACHE_PREFIX\}v1`;/);
+  assert.match(sw, /const CACHE_NAME {3}= `\$\{CACHE_PREFIX\}v2`;/);
   const list = sw.match(/const PRECACHE_URLS = \[([\s\S]*?)\];/)[1].match(/'\.\/[^']*'/g).map((x) => x.slice(3, -1));
   for (const u of list) {
     const p = path.join(ROOT, u === '' || u.endsWith('/') ? u + 'index.html' : u);
