@@ -124,8 +124,8 @@
       }, 'sc-copy');
     }
     if (o.again) button(o.again.label, o.again.onClick, 'sc-again');
-    msg = p('sc-msg', '');
-    msg.setAttribute('aria-live', 'polite');
+    if (!btns.firstChild) btns.remove();
+    if (!o.shared) { msg = p('sc-msg', ''); msg.setAttribute('aria-live', 'polite'); }
     if (o.note) p('sc-note', o.note);
     host.appendChild(card);
     return card;
