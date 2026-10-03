@@ -25,7 +25,9 @@ const NOAD = 'このページは広告なし・登録なし・入力は端末の
 const TESTS = ['mimi', 'hansha', 'doutai', 'kioku', 'roogan'];
 // 広告の扱い: meta だけ（遊ぶ画面・老眼チェック）／スクリプトあり（ハブ・耳と K95 の使い方）
 const META_ONLY = ['mimi/index.html', 'hansha/index.html', 'doutai/index.html', 'kioku/index.html', 'roogan/index.html', 'roogan/guide.html'];
-const WITH_ADS = ['index.html', 'mimi/guide.html', 'hansha/guide.html', 'doutai/guide.html', 'kioku/guide.html'];
+const WITH_ADS = ['index.html', 'mimi/guide.html', 'hansha/guide.html', 'doutai/guide.html', 'kioku/guide.html', 'en/sleep-calculator/index.html', 'en/sleep-calculator/guide.html'];
+// 英語だけのページ（K68 睡眠の計算。企画書 70）。共通ページは英語版（/en/about.html）へ
+const EN = ['en/sleep-calculator/guide.html', 'en/sleep-calculator/index.html'];
 const AD_SCRIPT = /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/g;
 
 function mainParas(s) {
@@ -35,7 +37,7 @@ function mainParas(s) {
 
 test('ページが揃っている（ハブ・5 つのテストと使い方・404）', () => {
   const names = FILES.map(rel).sort();
-  assert.deepEqual(names, ['404.html', 'index.html', ...TESTS.flatMap((t) => [t + '/guide.html', t + '/index.html'])].sort());
+  assert.deepEqual(names, ['404.html', 'index.html', ...TESTS.flatMap((t) => [t + '/guide.html', t + '/index.html']), ...EN].sort());
 });
 
 test('広告: 遊ぶ画面と老眼チェック（D118）は meta だけ、ハブと K94・K95 の使い方はスクリプト 1 個', () => {
@@ -99,7 +101,7 @@ test('共通ページ（運営者情報・プライバシーポリシー）へ�
     const r = rel(f);
     if (r === '404.html') continue;
     const s = fs.readFileSync(f, 'utf8');
-    const up = '../'.repeat(r.split('/').length);
+    const up = '../'.repeat(r.split('/').length) + (EN.includes(r) ? 'en/' : '');
     assert.ok(s.includes('href="' + up + 'about.html"'), r + ' about');
     assert.ok(s.includes('href="' + up + 'privacy-policy.html"'), r + ' privacy');
   }
@@ -142,10 +144,10 @@ test('耳: Web Audio の音量はゲインの上限（TONE_GAIN）だけを使�
   assert.doesNotMatch(s, /getUserMedia/);   // マイクは使わない
 });
 
-test('Service Worker: キャッシュ名は tameshite-v3、先読みするファイルはすべてある、manifest の id は /tameshite/', () => {
+test('Service Worker: キャッシュ名は tameshite-v4、先読みするファイルはすべてある、manifest の id は /tameshite/', () => {
   const sw = read('sw.js');
   assert.match(sw, /const CACHE_PREFIX = 'tameshite-';/);
-  assert.match(sw, /const CACHE_NAME {3}= `\$\{CACHE_PREFIX\}v3`;/);
+  assert.match(sw, /const CACHE_NAME {3}= `\$\{CACHE_PREFIX\}v4`;/);
   const list = sw.match(/const PRECACHE_URLS = \[([\s\S]*?)\];/)[1].match(/'\.\/[^']*'/g).map((x) => x.slice(3, -1));
   for (const u of list) {
     const p = path.join(ROOT, u === '' || u.endsWith('/') ? u + 'index.html' : u);

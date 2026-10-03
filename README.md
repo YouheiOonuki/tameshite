@@ -17,9 +17,10 @@ yorozu-craft のツールの1つです（共通ルールは [youheioonuki.github
 | `/doutai/` | 動体視力（K95）: 1〜9 が 2.0〜0.15 秒で横切る 14 段、2 回まちがえたら終わり | 同上 |
 | `/kioku/` | 記憶力（K95）: 1 秒に 1 つ出る数字を同じ順番・逆から。3〜12 けた | 同上 |
 | `/roogan/` | 老眼チェック（K115・高齢者向け）: カード（ID-1 の短い辺 53.98 mm）で画面の実寸を合わせ、近点・読める字の大きさ・赤緑 | **広告なし**（画面・使い方とも meta だけ。D118）。先頭に「このページは広告なし・登録なし・入力は端末の外に出ません。」 |
+| `/en/sleep-calculator/` | Sleep Calculator（K68・英語のみ。企画書 70）: 起きる時刻から寝る時刻（または逆）を、周期（80〜100 分、既定 90）× 6・5・4 周期＋寝つくまでの時間（初期値 15 分、出典なし・利用者が変える）で出す。年齢ごとの推奨時間（NHLBI）に入る最短の案を大きく。入力は保存しない（K123 の対象外）。先頭に「This is a rough guide, not medical advice.」。日本語の対が無いので hreflang は英語と x-default だけ | 通常（スクリプトあり。計算機で遊ぶ画面ではない） |
 
 - 記録は `tameshite_records`、画面の実寸は `tameshite_scale`（localStorage）。書き出し・読み込み（`tameshite-backup-YYYYMMDD.json`）と消去は各テストの「記録」から。外部には送信しない
-- オフライン: `sw.js`（キャッシュ `tameshite-v1`）
+- オフライン: `sw.js`（キャッシュ `tameshite-v4`）
 
 ## 使っている事実と出典
 
@@ -43,6 +44,8 @@ yorozu-craft のツールの1つです（共通ルールは [youheioonuki.github
 | `calc.js` | 判定・集計・換算・記録の正規化（純粋関数） |
 | `common.js` | 保存・記録・書き出し・読み込み・Service Worker |
 | `constants.js` | 出典と確認日 |
+| `sleep-values.js` / `sleep.js` | 睡眠の計算の出典・確認日（`CHECKED`）・周期と推奨時間の値と、計算（純粋関数） |
+| `en/sleep-calculator/` | 睡眠の計算の画面・使い方（英語） |
 | `style.css` | 見た目（ダークモード対応） |
 | `sw.js` / `manifest.webmanifest` | オフライン対応 |
 | `tests/*.test.js` | `node --test tests/*.test.js` |

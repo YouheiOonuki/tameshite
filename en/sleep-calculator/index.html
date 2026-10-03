@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Calculator: what time to go to bed or wake up (sleep cycles) | yorozu-craft</title>
+  <meta name="description" content="Sleep calculator: enter when you need to wake up to see bedtimes at 4, 5 or 6 sleep cycles, or enter your bedtime to see wake-up times. Cycle length and time to fall asleep are adjustable. Free, no sign-up.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yorozu-craft.com/tameshite/en/sleep-calculator/">
+  <link rel="alternate" hreflang="en" href="https://yorozu-craft.com/tameshite/en/sleep-calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://yorozu-craft.com/tameshite/en/sleep-calculator/">
+
+  <meta property="og:title" content="Sleep Calculator | yorozu-craft">
+  <meta property="og:description" content="What time to go to bed, or wake up, at the end of a sleep cycle.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yorozu-craft.com/tameshite/en/sleep-calculator/">
+  <meta property="og:site_name" content="yorozu-craft">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://yorozu-craft.com/tameshite/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#8b4513" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1814" media="(prefers-color-scheme: dark)">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Sleep Calculator",
+    "description": "Bedtimes or wake-up times at 4, 5 or 6 sleep cycles of 80 to 100 minutes, with time to fall asleep.",
+    "url": "https://yorozu-craft.com/tameshite/en/sleep-calculator/",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+    "inLanguage": "en"
+  }
+  </script>
+
+  <!-- Google AdSense（サイト所有確認 + 広告配信スクリプト）。計算機なので通常どおり（遊ぶ画面ではない） -->
+  <meta name="google-adsense-account" content="ca-pub-5375267956079717">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5375267956079717"
+     crossorigin="anonymous"></script>
+
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="./sleep.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>Sleep Calculator</h1>
+    <p class="subtitle">What time to go to bed, or wake up, between sleep cycles.</p>
+  </header>
+
+  <main class="app-main">
+    <p class="caution">This is a rough guide, not medical advice. If you sleep too much or too little, talk to a doctor.</p>
+
+    <form id="form" autocomplete="off" onsubmit="return false">
+      <fieldset class="card req">
+        <legend>Your time</legend>
+        <div class="modes" role="radiogroup" aria-label="What you know">
+          <label><input type="radio" name="mode" value="wake" data-k="mode"> I need to wake up at</label>
+          <label><input type="radio" name="mode" value="bed" data-k="mode"> I go to bed at</label>
+        </div>
+        <div class="field">
+          <label for="time" id="time-label">Wake-up time</label>
+          <input type="time" id="time" data-k="time" value="07:00" step="300">
+        </div>
+      </fieldset>
+
+      <section class="card result-card" id="result-card" tabindex="-1" aria-labelledby="h-result">
+        <h2 id="h-result">Your times</h2>
+        <div aria-live="polite">
+          <p class="result-sub" id="r-lead">Go to bed at</p>
+          <p class="result-big" id="r-big">—</p>
+          <p class="result-sub" id="r-detail"></p>
+        </div>
+        <ul class="sleep-list" id="r-list"></ul>
+        <p class="small" id="r-range"></p>
+        <p class="small">Real sleep cycles vary from night to night. <a href="./guide.html">How it works, sources and FAQ</a></p>
+      </section>
+    </form>
+
+    <details class="card opt" id="d-adjust">
+      <summary>Adjust: <span class="opt-state" id="st-adjust"></span></summary>
+      <div class="field">
+        <label for="latency">Minutes you take to fall asleep</label>
+        <p class="hint">15 is only a starting point. Use your own estimate.</p>
+        <input type="number" id="latency" data-k="latency" inputmode="numeric" min="0" max="120" step="1">
+      </div>
+      <div class="field">
+        <label for="cycle">Sleep cycle length</label>
+        <select id="cycle" data-k="cycle"></select>
+        <p class="hint" id="cycle-hint">Cycles last about 80 to 100 minutes.</p>
+      </div>
+      <div class="field">
+        <label for="age">Age group</label>
+        <select id="age" data-k="age"></select>
+      </div>
+    </details>
+
+    <p class="small center"><a href="./guide.html">How it works, sources and FAQ</a></p>
+  </main>
+
+  <footer class="app-footer">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="../../../en/">yorozu-craft</a></li>
+        <li><a href="./" aria-current="page">Sleep Calculator</a></li>
+        <li><a href="./guide.html">Guide and FAQ</a></li>
+        <li><a href="../../../en/about.html">About</a></li>
+        <li><a href="../../../en/privacy-policy.html">Privacy policy</a></li>
+      </ul>
+    </nav>
+    <p>&copy; 2026 yorozu-craft. All rights reserved.</p>
+  </footer>
+
+  <script src="../../sleep-values.js"></script>
+  <script src="../../sleep.js"></script>
+  <script src="./app.js"></script>
+  <!-- Cloudflare Web Analytics（Cookie を使わないアクセス解析） --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b79bf821e1fd4b6683866d493b1de426"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
