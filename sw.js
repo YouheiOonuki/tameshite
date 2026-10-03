@@ -10,7 +10,7 @@
 'use strict';
 
 const CACHE_PREFIX = 'tameshite-';
-const CACHE_NAME   = `${CACHE_PREFIX}v2`; // キャッシュする中身の構成を変えたら上げる
+const CACHE_NAME   = `${CACHE_PREFIX}v3`; // キャッシュする中身の構成を変えたら上げる
 
 /** 初回インストール時に取得しておくファイル */
 const PRECACHE_URLS = [
@@ -20,6 +20,7 @@ const PRECACHE_URLS = [
   './calc.js',
   './common.js',
   './reset-storage.js',
+  './share-card.js',
   './constants.js',
   './manifest.webmanifest',
   './favicon.svg',

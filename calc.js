@@ -231,6 +231,83 @@
     };
   }
 
+  // ===== 共有される結果（yorozu-plans K124・企画書 60） =====
+  // 結果の URL は「#」以降だけ（サーバーに届かない）。入るのは結果の数字と日時（UNIX 秒）だけで、名前・記録の一覧・端末の情報は入れない
+  // 開いた側は shareDecode で確かめ、範囲の外の値は捨てる（null）。種類（kind）ごとに静的な着地ページと OG 画像がある（s/<kind>.html・.png）
+  var SHARE_T_MIN = 1500000000, SHARE_T_MAX = 4102444800;   // 2017-07〜2100-01（それ以外の日時は付けない）
+  var INPUT_CODES = { key: 'k', mouse: 'm', touch: 't', pen: 'p' };
+  var HANSHA_BANDS = [100, 150, 200, 250, 300, 350, 400];   // 中央値の帯（50 ms ごと。100 は「150 ms 未満」、400 は「400 ms 以上」）
+  function intIn(v, lo, hi) { var n = Number(v); return v !== null && v !== '' && Math.floor(n) === n && n >= lo && n <= hi ? n : null; }
+  function hashParams(hash) {
+    var out = {};
+    String(hash || '').replace(/^#/, '').split('&').forEach(function (kv) {
+      var i = kv.indexOf('=');
+      if (i > 0 && /^[a-z]{1,2}$/.test(kv.slice(0, i)) && /^[0-9a-z]{0,12}$/.test(kv.slice(i + 1))) out[kv.slice(0, i)] = kv.slice(i + 1);
+    });
+    return out;
+  }
+  function withTime(parts, atMs) {
+    var t = Math.floor(Number(atMs) / 1000);
+    if (t >= SHARE_T_MIN && t <= SHARE_T_MAX) parts.push('t=' + t);
+    return '#' + parts.join('&');
+  }
+  function timeOf(p) { var t = intIn(p.t, SHARE_T_MIN, SHARE_T_MAX); return t === null ? null : t * 1000; }
+
+  /** 結果 → 「#」から始まる文字列。test は 'hansha' | 'kioku' | 'mimi'、r は記録と同じ形、atMs は結果が出た日時 */
+  function shareEncode(test, r, atMs) {
+    if (test === 'hansha') return withTime(['m=' + r.median, 'a=' + r.mean, 'b=' + r.best, 'i=' + (INPUT_CODES[r.input] || 't')], atMs);
+    if (test === 'kioku') return withTime(['k=' + r.best, 'o=' + (r.reverse ? 'r' : 'f')], atMs);
+    if (test === 'mimi') return withTime(['hz=' + (r.highest || 0)].concat(r.falseAlarm ? ['f=1'] : []), atMs);
+    throw new Error('unknown test ' + test);
+  }
+  /** 「#…」→ 結果（記録と同じ形に at の代わりに atMs）。読めない・範囲の外なら null */
+  function shareDecode(test, hash) {
+    var p = hashParams(hash);
+    if (test === 'hansha') {
+      var m = intIn(p.m, HANSHA_TOO_FAST, 4999), a = intIn(p.a, HANSHA_TOO_FAST, 4999), b = intIn(p.b, HANSHA_TOO_FAST, 4999);
+      if (m === null || a === null || b === null || b > m) return null;
+      var input = Object.keys(INPUT_CODES).filter(function (k) { return INPUT_CODES[k] === p.i; })[0] || 'touch';
+      return { median: m, mean: a, best: b, input: input, atMs: timeOf(p) };
+    }
+    if (test === 'kioku') {
+      var k = intIn(p.k, 0, KIOKU_MAX);
+      if (k === null || (k > 0 && k < KIOKU_START) || (p.o !== 'f' && p.o !== 'r')) return null;
+      return { best: k, reverse: p.o === 'r', atMs: timeOf(p) };
+    }
+    if (test === 'mimi') {
+      var hz = intIn(p.hz, 0, 20000);
+      if (hz === null || (hz !== 0 && TEST_FREQS.indexOf(hz) < 0)) return null;
+      return { highest: hz || null, falseAlarm: p.f === '1', atMs: timeOf(p) };
+    }
+    return null;
+  }
+  /** 結果の種類（着地ページと OG 画像の名前）。反射は中央値の 50 ms の帯、記憶はけた数、耳は聞こえた一番高い音 */
+  function shareKind(test, r) {
+    if (test === 'hansha') {
+      var band = HANSHA_BANDS[0];
+      HANSHA_BANDS.forEach(function (x) { if (r.median >= x) band = x; });
+      return String(r.median < 150 ? 100 : band);
+    }
+    if (test === 'kioku') return String(r.best);
+    if (test === 'mimi') return String(r.highest || 0);
+    throw new Error('unknown test ' + test);
+  }
+  /** 種類の一覧（着地ページと OG 画像を作る tools/build-share.mjs が使う。それぞれ 12 以内） */
+  function shareKinds(test) {
+    if (test === 'hansha') return HANSHA_BANDS.map(String);
+    if (test === 'kioku') { var ks = ['0']; for (var i = KIOKU_START; i <= KIOKU_MAX; i++) ks.push(String(i)); return ks; }
+    if (test === 'mimi') return ['0'].concat(TEST_FREQS.map(String));
+    return [];
+  }
+  /** 種類の見出し（OG 画像と着地ページの題に使う） */
+  function shareKindLabel(test, kind) {
+    var n = Number(kind);
+    if (test === 'hansha') return n === 100 ? '中央値 150 ms 未満' : n === 400 ? '中央値 400 ms 以上' : '中央値 ' + n + '〜' + (n + 49) + ' ms';
+    if (test === 'kioku') return n === 0 ? KIOKU_START + ' けたで 2 回まちがい' : n + ' けた';
+    if (test === 'mimi') return n === 0 ? '8,000 Hz から聞こえない' : n.toLocaleString('en-US') + ' Hz まで聞こえた';
+    return '';
+  }
+
   // --- バックアップファイル（README「ツールを追加するとき」20。決定 D31） ---
   // 形式: { tool, version, exportedAt, data }。data はブラウザに保存しているものと同じ形
   var BACKUP_VERSION = 1;
@@ -284,6 +361,7 @@
     ROOGAN_SIZES: ROOGAN_SIZES, normNearCm: normNearCm,
     REC_MAX: REC_MAX, normRecords: normRecords,
     backupFileName: backupFileName, buildBackup: buildBackup, parseBackup: parseBackup,
+    HANSHA_BANDS: HANSHA_BANDS, shareEncode: shareEncode, shareDecode: shareDecode, shareKind: shareKind, shareKinds: shareKinds, shareKindLabel: shareKindLabel,
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.Calc = api;
