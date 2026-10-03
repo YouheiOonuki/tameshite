@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How the sleep calculator works, sources and FAQ | Sleep Calculator | yorozu-craft</title>
+  <meta name="description" content="How the sleep calculator works: sleep cycles of 80 to 100 minutes, 4 to 6 cycles a night, time to fall asleep, and recommended hours by age, with sources from the NIH.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yorozu-craft.com/tameshite/en/sleep-calculator/guide.html">
+  <link rel="alternate" hreflang="en" href="https://yorozu-craft.com/tameshite/en/sleep-calculator/guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://yorozu-craft.com/tameshite/en/sleep-calculator/guide.html">
+
+  <meta property="og:title" content="How the sleep calculator works | yorozu-craft">
+  <meta property="og:description" content="Sleep cycles, time to fall asleep and recommended hours by age, with sources.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yorozu-craft.com/tameshite/en/sleep-calculator/guide.html">
+  <meta property="og:site_name" content="yorozu-craft">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://yorozu-craft.com/tameshite/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How long is a sleep cycle?",
+        "acceptedAnswer": { "@type": "Answer", "text": "About 80 to 100 minutes, according to the NHLBI at the US National Institutes of Health. Most nights have 4 to 6 cycles. This calculator uses 90 minutes unless you change it." }
+      },
+      {
+        "@type": "Question",
+        "name": "What time should I go to bed to wake up at 7 AM?",
+        "acceptedAnswer": { "@type": "Answer", "text": "With 90-minute cycles and 15 minutes to fall asleep: 9:45 PM for 6 cycles (9 hours) or 11:15 PM for 5 cycles (7.5 hours). Adults are advised to sleep 7 to 9 hours." }
+      },
+      {
+        "@type": "Question",
+        "name": "How much sleep do I need?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The NHLBI says adults need 7 to 9 hours a night, teens 8 to 10 hours and children 6 to 12 years 9 to 12 hours, naps included." }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google AdSense（サイト所有確認 + 広告配信スクリプト） -->
+  <meta name="google-adsense-account" content="ca-pub-5375267956079717">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5375267956079717"
+     crossorigin="anonymous"></script>
+
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>Sleep Calculator: guide</h1>
+    <p class="subtitle">How it works, sources and FAQ</p>
+  </header>
+
+  <main class="app-main">
+    <p class="caution">This is a rough guide, not medical advice. If you sleep too much or too little, talk to a doctor.</p>
+    <p class="card center"><a href="./">▶ Open the Sleep Calculator</a></p>
+
+    <section class="card">
+      <h2>How to use it</h2>
+      <p>This page explains how the bedtimes and wake-up times are worked out.</p>
+      <ol>
+        <li>Choose whether you know your wake-up time or your bedtime.</li>
+        <li>Enter the time. The result shows 6, 5 and 4 cycles.</li>
+        <li>Under “Adjust”, set how long you take to fall asleep, the cycle length and your age group.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>How it works</h2>
+      <ul>
+        <li>During the night you go through cycles of non-REM and REM sleep. The NHLBI says a cycle starts over every <span data-v="cmin">80</span> to <span data-v="cmax">100</span> minutes, with <span data-v="nmin">4</span> to <span data-v="nmax">6</span> cycles a night, and you may wake briefly between them.</li>
+        <li>Bedtime = wake-up time − cycles × cycle length − time to fall asleep. Wake-up time works the same way forward.</li>
+        <li>The big time is the shortest option within the recommended hours for your age group.</li>
+        <li>Time to fall asleep starts at <span data-v="lat">15</span> minutes. We found no official average, so set your own.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Sources and date checked</h2>
+      <p>Checked <time datetime="2026-10-03" data-v="checked">October 3, 2026</time>.</p>
+      <ul id="sources">
+        <li><a href="https://www.nhlbi.nih.gov/health/sleep/stages-of-sleep" target="_blank" rel="noopener noreferrer">NHLBI (NIH): Sleep Phases and Stages</a></li>
+        <li><a href="https://www.nhlbi.nih.gov/health/sleep/how-much-sleep" target="_blank" rel="noopener noreferrer">NHLBI (NIH): How Much Sleep Is Enough?</a></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Frequently asked questions</h2>
+      <dl class="faq">
+        <dt>How long is a sleep cycle?</dt>
+        <dd>About <span data-v="cmin">80</span> to <span data-v="cmax">100</span> minutes, according to the NHLBI at the US National Institutes of Health. Most nights have <span data-v="nmin">4</span> to <span data-v="nmax">6</span> cycles. This calculator uses <span data-v="cdef">90</span> minutes unless you change it.</dd>
+        <dt>What time should I go to bed to wake up at 7 AM?</dt>
+        <dd>With 90-minute cycles and 15 minutes to fall asleep: <span data-v="ex6">9:45 PM</span> for 6 cycles (9 hours) or <span data-v="ex5">11:15 PM</span> for 5 cycles (7.5 hours). Adults are advised to sleep 7 to 9 hours.</dd>
+        <dt>How much sleep do I need?</dt>
+        <dd>The NHLBI says adults need 7 to 9 hours a night, teens 8 to 10 hours and children 6 to 12 years 9 to 12 hours, naps included.</dd>
+      </dl>
+    </section>
+
+    <section class="card">
+      <h2>Notes and your data</h2>
+      <ul>
+        <li>Nothing you enter is saved or sent anywhere. The calculation runs in this browser.</li>
+        <li>Real cycles vary by person and by night. The times are a starting point, not a prescription.</li>
+      </ul>
+      <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSd8B90qh5lEIyr25iw1jOjdQjOyaPZ1_z2wMB4kH-EmEeJYWw/viewform?usp=pp_url&amp;entry.585564634=tameshite" target="_blank" rel="noopener">Feedback form (Google Forms, in Japanese; you can write in English)</a>. We read every message but do not reply.</p>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="../../../en/">yorozu-craft</a></li>
+        <li><a href="./">Sleep Calculator</a></li>
+        <li><a href="./guide.html" aria-current="page">Guide and FAQ</a></li>
+        <li><a href="../../../en/about.html">About</a></li>
+        <li><a href="../../../en/privacy-policy.html">Privacy policy</a></li>
+      </ul>
+    </nav>
+    <p>&copy; 2026 yorozu-craft. All rights reserved.</p>
+  </footer>
+
+  <script src="../../sleep-values.js"></script>
+  <script src="../../sleep.js"></script>
+  <script src="./guide.js"></script>
+  <!-- Cloudflare Web Analytics（Cookie を使わないアクセス解析） --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b79bf821e1fd4b6683866d493b1de426"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

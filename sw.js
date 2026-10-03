@@ -10,7 +10,7 @@
 'use strict';
 
 const CACHE_PREFIX = 'tameshite-';
-const CACHE_NAME   = `${CACHE_PREFIX}v3`; // キャッシュする中身の構成を変えたら上げる
+const CACHE_NAME   = `${CACHE_PREFIX}v4`; // キャッシュする中身の構成を変えたら上げる
 
 /** 初回インストール時に取得しておくファイル */
 const PRECACHE_URLS = [
@@ -40,6 +40,13 @@ const PRECACHE_URLS = [
   './roogan/',
   './roogan/roogan.js',
   './roogan/guide.html',
+  './sleep-values.js',
+  './sleep.js',
+  './en/sleep-calculator/',
+  './en/sleep-calculator/app.js',
+  './en/sleep-calculator/sleep.css',
+  './en/sleep-calculator/guide.html',
+  './en/sleep-calculator/guide.js',
 ];
 
 /** この時間ネットワークが応答しなければ、キャッシュがあればそちらを返す */
