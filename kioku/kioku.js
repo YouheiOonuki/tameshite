@@ -53,13 +53,16 @@
     $('start-row').hidden = false;
     $('mode-row').hidden = false;
     startBtn.textContent = 'もう一度';
-    T.addRecord('kioku', { best: st.best, reverse: reverse });
+    var rec = { best: st.best, reverse: reverse };
+    T.addRecord('kioku', rec);
     renderRecords();
+    T.shareCard({ test: 'kioku', r: rec, result: st.best ? st.best + ' けた' : Calc.KIOKU_START + ' けたで 2 回まちがい', sub: reverse ? '逆から答える' : '同じ順番で答える' });
     st = null;
   }
 
   startBtn.addEventListener('click', function () {
     clearTimers();
+    T.clearShared();
     reverse = document.querySelector('input[name="mode"]:checked').value === 'rev';
     st = { len: Calc.KIOKU_START, tries: 0, best: 0, done: false };
     $('start-row').hidden = true;
@@ -87,6 +90,18 @@
     el.recTable.innerHTML = list.length ? '<tr><th>日時</th><th>答え方</th><th class="num">けた</th></tr>' + list.map(function (r) {
       return '<tr><td>' + T.fmtDate(r.at) + '</td><td>' + (r.reverse ? '逆から' : '同じ順番') + '</td><td class="num">' + (r.best || '—') + '</td></tr>';
     }).join('') : '';
+  }
+  // --- 共有の URL（#k=…）で開いたとき: 送った人の結果を出す（記録には入れない） ---
+  var shared = T.sharedResult('kioku');
+  if (shared) {
+    el.result.textContent = shared.best ? shared.best + ' けた' : '—';
+    el.rsub.textContent = '共有された結果です。スタートを押すと、あなたの番です。';
+    T.sharedCard({ test: 'kioku', r: shared, result: shared.best ? shared.best + ' けた' : Calc.KIOKU_START + ' けたで 2 回まちがい', sub: shared.reverse ? '逆から答える' : '同じ順番で答える',
+      again: function () {
+        var m = document.querySelector('input[name="mode"][value="' + (shared.reverse ? 'rev' : 'fwd') + '"]');
+        if (m) m.checked = true;
+        startBtn.scrollIntoView({ block: 'center' }); startBtn.focus({ preventScroll: true });
+      } });
   }
   T.backupSetup({ kind: 'kioku', afterImport: renderRecords, afterClear: renderRecords });
   renderRecords();

@@ -41,7 +41,7 @@
     var t = now(e);
     lastInput = input;
     if (state === 'idle' || state === 'between' || state === 'done') {
-      if (state === 'done' || state === 'idle') { times = []; }
+      if (state === 'done' || state === 'idle') { times = []; T.clearShared(); }
       startWait();
       return;
     }
@@ -71,9 +71,12 @@
     status.textContent = '5 回: ' + times.map(function (x) { return Math.round(x); }).join('・') + ' ms';
     el.result.textContent = '中央値 ' + s.median + ' ms';
     el.rsub.textContent = '平均 ' + s.mean + ' ms・最速 ' + s.best + ' ms（' + (lastInput === 'key' ? 'キーボード' : lastInput === 'mouse' ? 'マウス' : 'タッチ') + '）。同じ端末・同じ押し方どうしで比べてください。';
-    T.addRecord('hansha', { median: s.median, mean: s.mean, best: s.best, input: lastInput });
+    var rec = { median: s.median, mean: s.mean, best: s.best, input: lastInput };
+    T.addRecord('hansha', rec);
     renderRecords();
+    T.shareCard({ test: 'hansha', r: rec, result: el.result.textContent, sub: '平均 ' + s.mean + ' ms・最速 ' + s.best + ' ms（' + INPUT_NAME[lastInput] + '）' });
   }
+  var INPUT_NAME = { key: 'キーボード', mouse: 'マウス', touch: 'タッチ', pen: 'ペン' };
 
   stage.addEventListener('pointerdown', function (e) {
     if (e.button && e.button !== 0) return;
@@ -106,6 +109,14 @@
     el.recTable.innerHTML = list.length ? '<tr><th>日時</th><th class="num">中央値</th><th class="num">最速</th><th>押し方</th></tr>' + list.map(function (r) {
       return '<tr><td>' + T.fmtDate(r.at) + '</td><td class="num">' + r.median + ' ms</td><td class="num">' + r.best + ' ms</td><td>' + name[r.input] + '</td></tr>';
     }).join('') : '';
+  }
+  // --- 共有の URL（#m=…）で開いたとき: 送った人の結果を出す（記録には入れない） ---
+  var shared = T.sharedResult('hansha');
+  if (shared) {
+    el.result.textContent = '中央値 ' + shared.median + ' ms';
+    el.rsub.textContent = '共有された結果です。スタートを押すと、あなたの反応を測ります。';
+    T.sharedCard({ test: 'hansha', r: shared, result: el.result.textContent, sub: '平均 ' + shared.mean + ' ms・最速 ' + shared.best + ' ms（' + INPUT_NAME[shared.input] + '）',
+      again: function () { stage.scrollIntoView({ block: 'center' }); stage.focus({ preventScroll: true }); } });
   }
   T.backupSetup({ kind: 'hansha', afterImport: renderRecords, afterClear: renderRecords });
   renderRecords();

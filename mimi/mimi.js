@@ -88,13 +88,17 @@
       : '聞こえた一番高い音です。' + (r.stoppedAt ? fmtHz(r.stoppedAt) + ' は「聞こえない」でした。' : '用意した一番高い音まで聞こえました。');
     if (r.falseAlarm) s += ' 音を出さない回に「聞こえた」がありました。周りの音や耳鳴りを聞いたのかもしれません。静かな所でもう一度どうぞ。';
     el.sub.textContent = s;
-    T.addRecord('mimi', { highest: r.highest, falseAlarm: r.falseAlarm });
+    var rec = { highest: r.highest, falseAlarm: r.falseAlarm };
+    T.addRecord('mimi', rec);
     renderRecords();
+    T.shareCard({ test: 'mimi', r: rec, result: r.highest === null ? fmtHz(Calc.TEST_FREQS[0]) + ' から聞こえない' : fmtHz(r.highest) + ' まで聞こえた',
+      sub: r.falseAlarm ? '音を出さない回に「聞こえた」あり' : '' });
     $('result-card').focus({ preventScroll: false });
   }
 
   el.start.addEventListener('click', function () {
     if (!audio()) { el.sub.textContent = noAudioMsg; return; }
+    T.clearShared();
     var freqs = Calc.playableFreqs(ctx.sampleRate);
     var silentAt = 1 + Math.floor(Math.random() * Math.min(4, freqs.length - 1));
     plan = Calc.mimiPlan(freqs, silentAt);
@@ -133,6 +137,15 @@
     el.recTable.innerHTML = list.length ? '<tr><th>日時</th><th class="num">聞こえた一番高い音</th></tr>' + list.map(function (r) {
       return '<tr><td>' + T.fmtDate(r.at) + '</td><td class="num">' + (r.highest ? fmtHz(r.highest) : '—') + (r.falseAlarm ? '（無音に「聞こえた」）' : '') + '</td></tr>';
     }).join('') : '';
+  }
+  // --- 共有の URL（#hz=…）で開いたとき: 送った人の結果を出す（記録には入れない。音は鳴らさない） ---
+  var shared = T.sharedResult('mimi');
+  if (shared) {
+    el.result.textContent = shared.highest === null ? '—' : fmtHz(shared.highest);
+    el.sub.textContent = '共有された結果です。端末と音量で変わるので、同じ端末どうしで比べてください。';
+    T.sharedCard({ test: 'mimi', r: shared, result: shared.highest === null ? fmtHz(Calc.TEST_FREQS[0]) + ' から聞こえない' : fmtHz(shared.highest) + ' まで聞こえた',
+      sub: shared.falseAlarm ? '音を出さない回に「聞こえた」あり' : '',
+      again: function () { el.check.scrollIntoView({ block: 'center' }); el.check.focus({ preventScroll: true }); } });
   }
   T.backupSetup({ kind: 'mimi', afterImport: renderRecords, afterClear: renderRecords });
   renderRecords();
