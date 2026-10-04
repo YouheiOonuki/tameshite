@@ -25,7 +25,9 @@ const NOAD = 'このページは広告なし・登録なし・入力は端末の
 const TESTS = ['mimi', 'hansha', 'doutai', 'kioku', 'roogan'];
 // 広告の扱い: meta だけ（遊ぶ画面・老眼チェック）／スクリプトあり（ハブ・耳と K95 の使い方）
 const META_ONLY = ['mimi/index.html', 'hansha/index.html', 'doutai/index.html', 'kioku/index.html', 'roogan/index.html', 'roogan/guide.html'];
-const WITH_ADS = ['index.html', 'mimi/guide.html', 'hansha/guide.html', 'doutai/guide.html', 'kioku/guide.html', 'en/sleep-calculator/index.html', 'en/sleep-calculator/guide.html'];
+const WITH_ADS = ['mimi/guide.html', 'hansha/guide.html', 'doutai/guide.html', 'kioku/guide.html', 'en/sleep-calculator/guide.html'];
+// AdSense 審査が通るまで本文の薄いページは広告 script を外し meta だけ（2026-10-04）。通ったら WITH_ADS に戻す
+const REVIEW_NO_AD = ['index.html', 'en/sleep-calculator/index.html'];
 // 英語だけのページ（K68 睡眠の計算。企画書 70）。共通ページは英語版（/en/about.html）へ
 const EN = ['en/sleep-calculator/guide.html', 'en/sleep-calculator/index.html'];
 const AD_SCRIPT = /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/g;
@@ -44,6 +46,11 @@ test('広告: 遊ぶ画面と老眼チェック（D118）は meta だけ、ハ�
   for (const r of META_ONLY) {
     const s = read(r);
     assert.doesNotMatch(s, /pagead2|adsbygoogle|googletagservices|doubleclick/i, r + ' に広告のスクリプトがある');
+    assert.equal((s.match(/<meta name="google-adsense-account" content="ca-pub-5375267956079717">/g) || []).length, 1, r);
+  }
+  for (const r of REVIEW_NO_AD) {
+    const s = read(r);
+    assert.equal((s.match(AD_SCRIPT) || []).length, 0, r + ' は審査中なので広告 script なし');
     assert.equal((s.match(/<meta name="google-adsense-account" content="ca-pub-5375267956079717">/g) || []).length, 1, r);
   }
   for (const r of WITH_ADS) {
