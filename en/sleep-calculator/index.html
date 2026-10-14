@@ -54,7 +54,8 @@
   </header>
 
   <main class="app-main">
-    <p class="caution">This is a rough guide, not medical advice. If you sleep too much or too little, talk to a doctor.</p>
+    <!-- data-keep: health caution (not medical advice), same role as D117 -->
+    <p class="caution" data-keep>This is a rough guide, not medical advice. If you sleep too much or too little, talk to a doctor.</p>
 
     <form id="form" autocomplete="off" onsubmit="return false">
       <fieldset class="card req">
@@ -72,13 +73,15 @@
       <section class="card result-card" id="result-card" tabindex="-1" aria-labelledby="h-result">
         <h2 id="h-result">Your times</h2>
         <div aria-live="polite">
-          <p class="result-sub" id="r-lead">Go to bed at</p>
+          <output class="result-sub" id="r-lead">Go to bed at</output>
           <p class="result-big" id="r-big">—</p>
           <p class="result-sub" id="r-detail"></p>
         </div>
         <ul class="sleep-list" id="r-list"></ul>
         <p class="small" id="r-range"></p>
-        <p class="small">Real sleep cycles vary from night to night. <a href="./guide.html">How it works, sources and FAQ</a></p>
+        <!-- data-keep: the result is an estimate -->
+        <p class="small" data-keep>Real sleep cycles vary from night to night.</p>
+        <p class="small"><a href="./guide.html">How it works, sources and FAQ</a></p>
       </section>
     </form>
 

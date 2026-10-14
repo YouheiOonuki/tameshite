@@ -7,3 +7,5 @@
 .sleep-list li.best { font-weight: 700; color: var(--accent); }
 .sleep-list .t { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .caution { font-size: 0.9rem; }
+
+output#r-lead { display: block; }
