@@ -125,7 +125,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 :where(html:not([data-skin="base"])) .card { margin-bottom: var(--sp-4); }
 :where(html:not([data-skin="base"])) .card h2 { margin-bottom: var(--sp-3); }
 :where(html:not([data-skin="base"])) .small { font-size: var(--fs-s); color: var(--muted); margin-top: var(--sp-2); }
-:where(html:not([data-skin="base"])) :where(.small, .hint) > a, :where(html:not([data-skin="base"])) p.card > a, :where(html:not([data-skin="base"])) .content li > a:only-child { display: inline-flex; align-items: center; min-height: var(--tap); }   /* 1 行に 1 つのリンクの高さ（地の文の中のリンクは対象外） */
+:where(html:not([data-skin="base"])) :where(.small, .hint) > a, :where(html:not([data-skin="base"])) p.card > a, :where(html:not([data-skin="base"])) :where(.content, .card) li > a:only-child { display: inline-flex; align-items: center; min-height: var(--tap); }   /* 1 行に 1 つのリンクの高さ（地の文の中のリンクは対象外） */
 :where(html:not([data-skin="base"])) ul.small a { overflow-wrap: anywhere; }   /* 出典の長い URL を折り返す（開いたときに横へ出ない） */
 :where(html:not([data-skin="base"])) .field input[type="number"], :where(html:not([data-skin="base"])) .field input[type="text"], :where(html:not([data-skin="base"])) .field select { width: 100%; max-width: 16rem; }
 :where(html:not([data-skin="base"])) .field .hint { font-size: var(--fs-s); color: var(--muted); margin-bottom: var(--sp-2); }
