@@ -1,6 +1,7 @@
 /* ===========================
-   ためして（耳・反射・目） — yorozu-craft 共通の和紙風の配色
-   色はトークン（--bg / --card / --text / --muted / --accent / --border）だけを使う。
+   ためして（耳・反射・目） — yorozu-common v2 の皮（B「静かな道具」、yorozu-plans DESIGN.md）に載せ替え（K192 段 3 の 2）
+   共通の皮のページ（index・roogan・en/sleep-calculator とそれぞれの guide）の色・字・角・線は皮のトークンだけを使う
+   mimi・hansha・doutai・kioku の index.html・guide.html は土台（<html data-skin="base">）で皮が外れる。その見た目は「土台のページの見た目」の節が持つ（v1 の和紙の配色のまま）
    ダークモードは端末の設定に自動で合わせる（prefers-color-scheme。手動切替は付けない）
    =========================== */
 /* yorozu-common:begin v2 — サイト共通の土台と皮。正本は youheioonuki.github.io の tools/common/v2/base.css と skin.css（yorozu-plans DESIGN.md）。
@@ -71,9 +72,12 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 :where(html:not([data-skin="base"])) :where(.notice, [data-keep]) { border-left: 4px solid var(--text); background: var(--bg-2); padding: var(--sp-2) var(--sp-3); }
 :where(html:not([data-skin="base"])) :where(.fixed-bar) { position: sticky; bottom: 0; background: var(--card); border-top: 1px solid var(--border); padding: var(--sp-2) var(--sp-4); }
 /* yorozu-common:end */
-/* yorozu-v1-carry — v1 の共通（和紙の色、2026-09-23〜10-17）から、このファイルのページが使っていた見た目をそのまま持ち込んだ（yorozu-plans ROADMAP 7.99、K192 段 3 の 0）。
-   段 3 の 2〜4 でこのページを v2 のトークンに載せ替えるときに、yorozu-v1-carry:end まで消す */
-:root {
+
+/* ===========================
+   土台のページ（<html data-skin="base">: mimi・hansha・doutai・kioku の index.html・guide.html）の見た目。共通の皮のページには効かない
+   皮が外れるので、色・字・角のトークンと、共通の皮のページと同じ名前の部品の見た目をここで持つ（v1 の和紙の配色のまま）
+   =========================== */
+:where(html[data-skin="base"]) {
   color-scheme: light dark;
   --bg: #f0ebe0; --bg-2: #e6dfd0; --card: #faf6ee; --text: #3a3025; --muted: #6e604f;
   --accent: #8b4513; --accent-soft: #f3e6d8; --border: #cfc0a0; --input-border: #857561; --shadow: rgba(58, 48, 37, 0.12);
@@ -82,114 +86,69 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   --lh-body: 1.7; --lh-tight: 1.4; --radius: 8px;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :where(html[data-skin="base"]) {
     --bg: #1c1814; --bg-2: #25201a; --card: #2b251e; --text: #ece4d6; --muted: #b9ab96;
     --accent: #e0a066; --accent-soft: #3a2e22; --border: #4a3f33; --input-border: #8c7d68; --shadow: rgba(0, 0, 0, 0.4);
     --error: #ff8a7a; --ok: #6fcf97; --focus-ring: #ffd43d; --focus: #000;
   }
 }
-body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: var(--lh-body); }
-a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-@media (hover: hover) { a:hover { text-decoration-thickness: 3px; } }
-:where(input, textarea)::placeholder { color: var(--muted); opacity: 1; }
+:where(html[data-skin="base"]) body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: var(--lh-body); }
+:where(html[data-skin="base"]) a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+@media (hover: hover) { :where(html[data-skin="base"]) a:hover { text-decoration-thickness: 3px; } }
+:where(html[data-skin="base"]) :where(input, textarea)::placeholder { color: var(--muted); opacity: 1; }
+:where(html[data-skin="base"]) .app-header { text-align: center; padding: 1.4rem 1rem 1.1rem; background: var(--bg-2); border-bottom: 2px solid var(--border); }
+:where(html[data-skin="base"]) .app-header h1 { font-size: 1.45rem; color: var(--accent); line-height: 1.4; }
+:where(html[data-skin="base"]) .app-header .subtitle { font-size: 0.88rem; color: var(--muted); margin-top: 0.3rem; }
+:where(html[data-skin="base"]) .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 2px 8px var(--shadow); }
+:where(html[data-skin="base"]) .card h2 { font-size: 1.02rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; margin-bottom: 0.9rem; }
+:where(html[data-skin="base"]) .field input[type="number"], :where(html[data-skin="base"]) .field input[type="text"], :where(html[data-skin="base"]) .field select {
+  width: 100%; max-width: 16rem; padding: 0.45rem 0.5rem; font-size: 1rem; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--text);
+}
+:where(html[data-skin="base"]) .btn { display: inline-block; padding: 0.5rem 1.1rem; border: none; border-radius: 6px; background: var(--accent); color: var(--card); font-size: 0.95rem; font-weight: 600; cursor: pointer; }
+:where(html[data-skin="base"]) .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:where(html[data-skin="base"]) .small { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; }
+:where(html[data-skin="base"]) details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 480px) { :where(html[data-skin="base"]) .app-header h1 { font-size: 1.2rem; } }
+/* 体を測る道具の注意（WRITING 2 章の定型文）。本文の最初に置く */
+:where(html[data-skin="base"]) .caution {
+  font-size: 0.88rem; line-height: 1.55; padding: 0.55rem 0.8rem; margin-bottom: 0.8rem;
+  border-radius: 8px; border: 1px solid var(--border); background: var(--accent-soft); color: var(--text);
+  border-left: 5px solid var(--accent); font-weight: 600;
+}
+
+/* ===========================
+   共通の皮のページの配置と、この道具だけの部品。土台のページと同じ名前の規則は :where(html:not([data-skin="base"])) で絞り、土台の見た目を変えない
+   =========================== */
 .app-header > p { max-width: 40em; margin-left: auto; margin-right: auto; }
-/* yorozu-v1-carry:end */
+:where(html:not([data-skin="base"])) .app-header { text-align: center; padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--border); }
+:where(html:not([data-skin="base"])) .app-header .subtitle { font-size: var(--fs-s); color: var(--muted); margin-top: var(--sp-1); }
+:where(html:not([data-skin="base"])) .card { margin-bottom: var(--sp-4); }
+:where(html:not([data-skin="base"])) .card h2 { margin-bottom: var(--sp-3); }
+:where(html:not([data-skin="base"])) .small { font-size: var(--fs-s); color: var(--muted); margin-top: var(--sp-2); }
+:where(html:not([data-skin="base"])) :where(.small, .hint) > a, :where(html:not([data-skin="base"])) p.card > a { display: inline-flex; align-items: center; min-height: var(--tap); }   /* 1 行に 1 つのリンクの高さ（地の文の中のリンクは対象外） */
+:where(html:not([data-skin="base"])) ul.small a { overflow-wrap: anywhere; }   /* 出典の長い URL を折り返す（開いたときに横へ出ない） */
+:where(html:not([data-skin="base"])) .field input[type="number"], :where(html:not([data-skin="base"])) .field input[type="text"], :where(html:not([data-skin="base"])) .field select { width: 100%; max-width: 16rem; }
+:where(html:not([data-skin="base"])) .field .hint { font-size: var(--fs-s); color: var(--muted); margin-bottom: var(--sp-2); }
+:where(html:not([data-skin="base"])) :where(.caution, .noad) { margin-bottom: var(--sp-3); }   /* 帯の見た目は皮の .notice（HTML 側で付ける） */
 
-:root {
-  color-scheme: light dark;
-  --bg: #f0ebe0;
-  --bg-2: #e6dfd0;
-  --card: #faf6ee;
-  --text: #3a3025;
-  --muted: #6e604f;
-  --accent: #8b4513;
-  --accent-soft: #f3e6d8;
-  --border: #cfc0a0;
-  --shadow: rgba(58, 48, 37, 0.12);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1c1814;
-    --bg-2: #25201a;
-    --card: #2b251e;
-    --text: #ece4d6;
-    --muted: #b9ab96;
-    --accent: #e0a066;
-    --accent-soft: #3a2e22;
-    --border: #4a3f33;
-    --shadow: rgba(0, 0, 0, 0.4);
-  }
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-[hidden] { display: none !important; }
-
-body {
-  /* README「ツールを追加するとき」9: 端末のフォント。Web フォントは読まない */
-  font-family: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-}
-
-a { color: var(--accent); }
-
-/* ヘッダー */
-.app-header {
-  text-align: center;
-  padding: 1.4rem 1rem 1.1rem;
-  background: var(--bg-2);
-  border-bottom: 2px solid var(--border);
-}
-.app-header h1 { font-size: 1.45rem; color: var(--accent); line-height: 1.4; }
-.app-header .subtitle { font-size: 0.88rem; color: var(--muted); margin-top: 0.3rem; }
-
-/* レイアウト */
+/* ヘッダー・パンくず・フッター */
+.crumb { font-size: 0.82rem; margin-bottom: 0.2rem; }
+.crumb a { color: var(--muted); }
+:where(html:not([data-skin="base"])) .crumb a { display: inline-flex; align-items: center; min-height: var(--tap); }
 .app-main { max-width: 680px; margin: 0 auto; padding: 1rem; }
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.2rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px var(--shadow);
-}
-.card h2 {
-  font-size: 1.02rem;
-  color: var(--accent);
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.4rem;
-  margin-bottom: 0.9rem;
-}
+.app-footer { text-align: center; padding: 1rem; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 0.5rem; }
+.footer-nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-bottom: 0.6rem; }
+.footer-nav a { color: var(--muted); text-decoration: none; }
+.footer-nav a:hover, .footer-nav a[aria-current="page"] { color: var(--accent); }
+:where(html:not([data-skin="base"])) .footer-nav ul { gap: 0 1.1rem; }
+:where(html:not([data-skin="base"])) .footer-nav a { display: inline-flex; align-items: center; min-height: var(--tap); }
 
 /* 入力 */
 .field { margin-bottom: 1rem; }
 .field label { display: block; font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
-.field .hint { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; }
-.field input[type="number"], .field input[type="text"], .field select {
-  width: 100%;
-  max-width: 16rem;
-  padding: 0.45rem 0.5rem;
-  font-size: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--card);
-  color: var(--text);
-}
-
-.btn {
-  display: inline-block;
-  padding: 0.5rem 1.1rem;
-  border: none;
-  border-radius: 6px;
-  background: var(--accent);
-  color: var(--card);
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.field input[type="number"] { font-size: 1.1rem; }
+.inline-field { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.inline-field input { max-width: 7rem !important; }
 
 /* 読みもの（guide.html） */
 .content h3 { font-size: 0.95rem; margin: 1rem 0 0.3rem; }
@@ -199,52 +158,28 @@ a { color: var(--accent); }
 .faq dt { font-weight: 600; margin-top: 0.9rem; font-size: 0.92rem; }
 .faq dt::before { content: 'Q. '; color: var(--accent); }
 .faq dd { font-size: 0.88rem; color: var(--muted); padding: 0.2rem 0 0.5rem 1.2rem; border-bottom: 1px solid var(--border); }
-.info-list { display: grid; grid-template-columns: max-content 1fr; gap: 0.4rem 1.2rem; font-size: 0.9rem; }
-.info-list dt { font-weight: 600; }
-.info-list dd { color: var(--muted); }
-.small { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; }
-
-/* フッター */
-.app-footer {
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.78rem;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-  margin-top: 0.5rem;
-}
-.footer-nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-bottom: 0.6rem; }
-.footer-nav a { color: var(--muted); text-decoration: none; }
-.footer-nav a:hover, .footer-nav a[aria-current="page"] { color: var(--accent); }
-
-@media (max-width: 480px) {
-  .app-header h1 { font-size: 1.2rem; }
-}
 
 /* ===========================
    画面の骨組み（yorozu-plans の docs/SCREEN.md。README「ツールを追加するとき」25）
-   必須の入力（fieldset.req）→ 結果（.result-card）→ くわしく入れる（details.opt）、上端の固定バー、PC の 2 カラム
-   seido-keisan/nenmatsu と gakushu-print の試験（2026-09-24）から取り出したもの
+   必須の入力（fieldset.req）→ 結果（.result-card）→ くわしく入れる（details.opt）
    =========================== */
 fieldset.card { min-width: 0; }
-.req legend {
-  float: left; width: 100%;   /* legend を枠の上に載せず、h2 と同じ見た目で枠の中に置く */
-  font-size: 1.02rem; font-weight: 700; color: var(--accent);
-  border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; margin-bottom: 0.9rem;
-}
+.req legend { float: left; width: 100%; font-size: var(--fs-l); font-weight: 800; line-height: var(--lh-tight); margin-bottom: var(--sp-3); }   /* legend を枠の上に載せず、h2 と同じ見た目で枠の中に置く */
 .req legend + * { clear: both; }
 
 /* 結果: 大きな数字 1 つ＋ 1 行。内訳は details.rels */
-.result-card { scroll-margin-top: 56px; }   /* 固定バー（44px）で見出しが隠れないように */
+.result-card { scroll-margin-top: 56px; }
 .result-card:focus { outline: none; }
 .result-big { font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1.3; }
 .result-sub { font-size: 0.9rem; color: var(--muted); }
+:where(html:not([data-skin="base"])) .result-sub { font-size: var(--fs-m); }   /* output も 16px 以上 */
+:where(html:not([data-skin="base"])) .result-num { line-height: 1.3; }
 details.rels > summary { cursor: pointer; min-height: 44px; padding: 0.55rem 0; list-style: none; color: var(--accent); font-size: 0.92rem; }
 details.rels > summary::-webkit-details-marker { display: none; }
 details.rels > summary::before { content: '▸'; margin-right: 0.4rem; }
 details.rels[open] > summary::before { content: '▾'; }
 
-/* くわしく入れる（1 グループ 1 つの details）。summary の .opt-state に今の状態を出す（screen.js の detailsSummary） */
+/* くわしく入れる（1 グループ 1 つの details）。summary の .opt-state に今の状態を出す */
 details.card.opt { padding: 0 1.2rem; margin-bottom: 0.6rem; }
 details.card.opt > summary {
   cursor: pointer; display: block; min-height: 44px; padding: 0.6rem 0;
@@ -255,67 +190,27 @@ details.card.opt > summary::before { content: '▸'; margin-right: 0.4rem; }
 details.card.opt[open] > summary::before { content: '▾'; }
 details.card.opt[open] { padding-bottom: 0.9rem; }
 details.card.opt[open] > summary { border-bottom: 1px solid var(--border); margin-bottom: 0.9rem; }
-details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .opt-state { color: var(--text); font-weight: normal; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.6rem 0; }   /* ボタンの間隔（SCREEN.md 5 章。4 章の上下 12px 以上は margin で） */
 .btn-row .btn { min-height: 44px; }
 
-/* 固定バー（SCREEN.md 0 章の 3・D59）: 上端に 1 行、高さ 44px。下端は AdSense のアンカー広告が使う。
-   読み込み時は hidden（screen.js が出し入れする。fixed なのでレイアウトはずれない） */
-.fixbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: 44px;
-  background: var(--card); border-bottom: 2px solid var(--accent); box-shadow: 0 2px 8px var(--shadow);
-}
-.fixbar a, .fixbar button {
-  display: block; width: 100%; max-width: 720px; margin: 0 auto; padding: 0 1rem; height: 42px; line-height: 42px; text-align: center;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: inherit; font-weight: 700;
-  color: var(--accent); background: none; border: none; text-decoration: none; cursor: pointer;
-}
-.fixbar a:focus-visible, .fixbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
-
-/* PC（900px 以上）の 2 カラム（D63: 制度の計算機だけ）。<main class="app-main layout-2col"> にすると、
-   左に入力・右に結果（sticky）。結果が常に見えるので、固定バーに fixbar-narrow も付けて PC では出さない */
-@media (min-width: 900px) {
-  .fixbar-narrow { display: none !important; }
-  .layout-2col { max-width: 1120px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); column-gap: 1.2rem; align-items: start; }
-  .layout-2col > *, .layout-2col > form > * { grid-column: 1; }
-  .layout-2col > form { display: contents; }
-  .layout-2col .result-card { grid-column: 2; grid-row: 1 / span 30; position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
-}
-
 @media print {
-  .fixbar, .no-print { display: none !important; }
+  .no-print { display: none !important; }
   /* 印刷では折りたたみの中も出す（途中の計算・入れた値を紙に残す） */
   main details::details-content { content-visibility: visible; display: block; }
   main details > summary::before { content: none; }
-  .layout-2col { display: block; }
-  .layout-2col .result-card { position: static; max-height: none; overflow: visible; }
-  /* 広告は印刷に出さない（gakushu-print と同じ） */
-  ins.adsbygoogle, .google-auto-placed, iframe[id^="aswift"], iframe[id^="google_ads"] { display: none !important; }
 }
+
+.center { text-align: center; }
 
 /* ===========================
-   ためして — テストの画面（遊びの画面: SCREEN.md 1.3。広告のスクリプトは読み込まない）
+   ためして — テストの画面（土台のページ。遊びの画面: SCREEN.md 1.3。広告のスクリプトは読み込まない）
    =========================== */
-.crumb { font-size: 0.82rem; margin-bottom: 0.2rem; }
-.crumb a { color: var(--muted); }
-/* 体を測る道具の注意（WRITING 2 章の定型文）と、高齢者向けページの定型文（D118）。本文の最初に置く */
-.caution, .noad {
-  font-size: 0.88rem; line-height: 1.55; padding: 0.55rem 0.8rem; margin-bottom: 0.8rem;
-  border-radius: 8px; border: 1px solid var(--border); background: var(--accent-soft); color: var(--text);
-}
-.caution { border-left: 5px solid var(--accent); font-weight: 600; }
-.noad { font-weight: 600; }
-.center { text-align: center; }
-.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
 .btn-big { font-size: 1.15rem; padding: 0.75rem 2rem; min-height: 52px; }
 .btn-sub { background: var(--card); color: var(--accent); border: 2px solid var(--accent); }
 .btn-sm { font-size: 0.88rem; padding: 0.35rem 0.8rem; min-height: 44px; }
 .btn[disabled] { opacity: 0.45; cursor: default; }
 .start-row { text-align: center; margin: 0.8rem 0; }
-.steps { padding-left: 1.3rem; font-size: 0.9rem; }
-.steps li + li { margin-top: 0.3rem; }
 .warn { font-size: 0.9rem; padding-left: 1.2rem; }
 .warn li + li { margin-top: 0.25rem; }
 
@@ -363,20 +258,21 @@ details > summary:focus-visible { outline: 2px solid var(--accent); outline-offs
 .freq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 0.4rem; margin: 0.5rem 0; }
 .freq-grid .btn { min-height: 44px; }
 
+/* ===========================
+   共通の皮のページだけの部品
+   =========================== */
 /* ハブの一覧 */
-.tools { list-style: none; display: grid; gap: 0.7rem; margin-bottom: 1rem; }
-.tools a { display: block; padding: 0.9rem 1rem; border: 1px solid var(--border); border-radius: 10px; background: var(--card); text-decoration: none; box-shadow: 0 2px 6px var(--shadow); }
+.tools { list-style: none; display: grid; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+.tools a { display: block; padding: var(--sp-3) var(--sp-4); border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); text-decoration: none; }
 .tools .t { display: block; font-weight: 700; color: var(--accent); font-size: 1.05rem; }
 .tools .d { display: block; color: var(--text); font-size: 0.88rem; margin-top: 0.15rem; }
+.steps { padding-left: 1.3rem; font-size: 0.9rem; }
+.steps li + li { margin-top: 0.3rem; }
 
 /* 老眼チェック: タブ・カード合わせ・字の大きさ・赤緑 */
-.tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.3rem; margin-bottom: 0.8rem; }
-.tabs button {
-  min-height: 52px; font: inherit; font-size: 0.85rem; font-weight: 600; line-height: 1.25; border-radius: 8px; cursor: pointer;
-  border: 2px solid var(--border); background: var(--card); color: var(--text); padding: 0.2rem;
-}
+.tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-1); margin-bottom: var(--sp-3); }
+.tabs button { min-height: 52px; font-size: var(--fs-s); line-height: 1.25; border-width: 2px; padding: var(--sp-1); }
 .tabs button[aria-selected="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
-.panel h2 { font-size: 1.05rem; color: var(--accent); margin-bottom: 0.5rem; }
 .card-fit { margin: 0.6rem 0; overflow: hidden; }
 .card-shape { background: #e7eef6; border: 2px solid #245a8a; border-radius: 3.2mm; position: relative; margin: 0 auto 0.4rem 0; }
 .card-shape span { position: absolute; left: 8px; bottom: 6px; font-size: 0.75rem; color: #245a8a; }
@@ -384,8 +280,8 @@ details > summary:focus-visible { outline: 2px solid var(--accent); outline-offs
 .fit-row input[type="range"] { flex: 1 1 10rem; min-height: 44px; }
 .fit-row .btn { min-width: 44px; }
 .scale-state { font-size: 0.85rem; color: var(--muted); }
-.target { font-weight: 400; color: #000; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; text-align: center; overflow: hidden; }
-.size-rows { background: #fff; color: #000; border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.6rem; }
+.target { font-weight: 400; color: #000; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 0.8rem; text-align: center; overflow: hidden; }
+.size-rows { background: #fff; color: #000; border: 1px solid var(--border); border-radius: var(--radius); padding: 0.4rem 0.6rem; }
 .size-row { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; border-bottom: 1px solid #ddd; cursor: pointer; }
 .size-row:last-child { border-bottom: none; }
 .size-row input { flex: none; width: 1.2rem; height: 1.2rem; }
@@ -393,15 +289,12 @@ details > summary:focus-visible { outline: 2px solid var(--accent); outline-offs
 .size-row .s-text { flex: 1; min-width: 0; position: relative; overflow: hidden; white-space: nowrap; }
 .size-row .s-text span { position: absolute; left: 0; top: 0; transform-origin: left top; font-size: 40px; line-height: 1; }
 .size-row .s-mm { flex: none; font-size: 0.8rem; color: #444; }
-.duo { display: grid; grid-template-columns: 1fr 1fr; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.duo { display: grid; grid-template-columns: 1fr 1fr; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
 .duo div { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem 0.3rem; min-height: 11rem; }
 .duo .r { background: #d71920; }
 .duo .g { background: #1f9a3a; }
 .duo svg { width: 7rem; height: 7rem; }
 .duo .txt { color: #000; font-weight: 700; margin-top: 0.4rem; font-size: 1.1rem; letter-spacing: 0.1em; }
-.field input[type="number"] { font-size: 1.1rem; }
-.inline-field { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-.inline-field input { max-width: 7rem !important; }
 
 /* この道具について（結果の後ろの折りたたみ。使い方ページの要約。AdSense 審査 2026-10-04） */
 details.card.opt.about-tool > summary { white-space: normal; }   /* 長い summary を折り返す */

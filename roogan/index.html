@@ -18,8 +18,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#8b4513" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1c1814" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#eef0f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15191d" media="(prefers-color-scheme: dark)">
 
   <script type="application/ld+json">
 {
@@ -61,8 +61,8 @@
   </header>
 
   <main class="app-main">
-    <p class="noad">このページは広告なし・登録なし・入力は端末の外に出ません。</p>
-    <p class="caution">これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。</p>
+    <p class="noad notice">このページは広告なし・登録なし・入力は端末の外に出ません。</p>
+    <p class="caution notice">これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。</p>
 
     <div class="tabs" role="tablist" aria-label="チェックの種類">
       <button type="button" role="tab" id="tab-fit" aria-controls="p-fit" aria-selected="true">① 画面合わせ</button>
@@ -75,11 +75,11 @@
       <h2>① 画面の大きさをカードで合わせる</h2>
       <p class="small">カードを青い枠に縦に重ね、横幅を合わせます。</p>
       <div class="fit-row">
-        <button type="button" class="btn btn-sub btn-sm" id="fit-minus" aria-label="小さく">−</button>
+        <button type="button" class="btn" id="fit-minus" aria-label="小さく">−</button>
         <input type="range" id="fit-range" min="2" max="12" step="0.01" aria-label="枠の大きさ">
-        <button type="button" class="btn btn-sub btn-sm" id="fit-plus" aria-label="大きく">＋</button>
+        <button type="button" class="btn" id="fit-plus" aria-label="大きく">＋</button>
       </div>
-      <p class="start-row"><button type="button" class="btn btn-big" id="fit-save">この大きさで決める</button></p>
+      <p class="start-row"><button type="button" class="btn btn-primary" id="fit-save">この大きさで決める</button></p>
       <p class="scale-state" id="scale-state" aria-live="polite"></p>
       <div class="card-fit"><div class="card-shape" id="card-shape"><span>カードの短い辺</span></div></div>
       <details class="rels"><summary>カードが無いとき・うまく合わないとき</summary>
@@ -121,16 +121,16 @@
         <div class="g"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="#000" stroke-width="3"/><circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="3"/><circle cx="50" cy="50" r="16" fill="none" stroke="#000" stroke-width="3"/></svg><span class="txt">あ 8 9</span></div>
       </div>
       <div class="ans-row">
-        <button type="button" class="btn btn-sub" data-rg="red">赤の側</button>
-        <button type="button" class="btn btn-sub" data-rg="same">同じくらい</button>
-        <button type="button" class="btn btn-sub" data-rg="green">緑の側</button>
+        <button type="button" class="btn" data-rg="red">赤の側</button>
+        <button type="button" class="btn" data-rg="same">同じくらい</button>
+        <button type="button" class="btn" data-rg="green">緑の側</button>
       </div>
     </section>
 
     <section class="card result-card" id="result-card" tabindex="-1" aria-labelledby="h-result">
       <h2 id="h-result">結果</h2>
       <div id="result-main" aria-live="polite">
-        <p class="result-big" id="result">—</p>
+        <p class="result-num" id="result">—</p>
         <p class="result-sub" id="result-sub">記録するとここに出ます。</p>
       </div>
       <p class="small">見え方が気になるときは眼科へ。<a href="./guide.html">根拠</a></p>
@@ -141,10 +141,10 @@
       <table class="rec-table" id="rec-table"></table>
       <p class="small">記録はこの端末のブラウザ（localStorage、キー <code>tameshite_records</code>）にだけ保存され、外部には送信されません。書き出し・読み込み・消去はここのボタンから。</p>
       <div class="btn-row">
-        <button type="button" class="btn btn-sub btn-sm" id="rec-export">ファイルに書き出す</button>
-        <button type="button" class="btn btn-sub btn-sm" id="rec-import">ファイルから読み込む</button>
-        <button type="button" class="btn btn-sub btn-sm" id="rec-reset">記録を消す</button>
-        <button type="button" class="btn btn-sub btn-sm" data-reset-storage="tameshite_" data-reset-confirm="「ためして」の 5 つのテストすべての記録と、画面の実寸の設定を、この端末から消して初期状態に戻します。消した内容は元に戻せません。よろしいですか？">保存した内容をすべて消す（初期状態に戻す）</button>
+        <button type="button" class="btn" id="rec-export">ファイルに書き出す</button>
+        <button type="button" class="btn" id="rec-import">ファイルから読み込む</button>
+        <button type="button" class="btn" id="rec-reset">記録を消す</button>
+        <button type="button" class="btn" data-reset-storage="tameshite_" data-reset-confirm="「ためして」の 5 つのテストすべての記録と、画面の実寸の設定を、この端末から消して初期状態に戻します。消した内容は元に戻せません。よろしいですか？">保存した内容をすべて消す（初期状態に戻す）</button>
       </div>
       <input type="file" id="rec-file" accept=".json,application/json" hidden>
       <p id="rec-msg" class="small" aria-live="polite"></p>
