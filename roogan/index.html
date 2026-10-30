@@ -54,13 +54,18 @@
 </head>
 <body class="play-page">
 
+  <!-- 固定バー（SCREEN.md 1.1・D59）: 結果が出たあと、結果が画面の外にあるときだけ上端に出す -->
+  <div class="fixed-bar" id="fixbar" role="status" hidden>
+    <a href="#result-card"><span id="fixbar-text"></span> ▸ 結果へ</a>
+  </div>
+
   <header class="app-header">
     <p class="crumb"><a href="../">ためして（耳・反射・目）</a></p>
     <h1>老眼チェック</h1>
     <p class="subtitle">近くの見え方をスマホで試す。① から順に。</p>
   </header>
 
-  <main class="app-main">
+  <main class="app-main layout-2col">
     <p class="noad notice">このページは広告なし・登録なし・入力は端末の外に出ません。</p>
     <p class="caution notice">これは遊びの目安で、医療の検査ではありません。気になるときは眼科・耳鼻科へ。</p>
 
@@ -168,6 +173,7 @@
 
   <script src="../calc.js"></script>
   <script src="../common.js"></script>
+  <script src="../screen.js"></script>
   <script src="../reset-storage.js"></script>
   <script src="./roogan.js"></script>
   <!-- Cloudflare Web Analytics（Cookie を使わないアクセス解析） --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b79bf821e1fd4b6683866d493b1de426"}'></script><!-- End Cloudflare Web Analytics -->

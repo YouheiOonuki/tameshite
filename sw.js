@@ -19,6 +19,7 @@ const PRECACHE_URLS = [
   './style.css',
   './calc.js',
   './common.js',
+  './screen.js',
   './reset-storage.js',
   './share-card.js',
   './constants.js',
