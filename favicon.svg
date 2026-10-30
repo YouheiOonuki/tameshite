@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <!-- ためして: 目（まる）と音の波 -->
-  <rect x="4" y="4" width="56" height="56" rx="12" fill="#faf6ee" stroke="#8b4513" stroke-width="4"/>
-  <path d="M12 32 Q32 14 52 32 Q32 50 12 32 Z" fill="none" stroke="#3a3025" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="#eef0f2" stroke="#0e5a6b" stroke-width="4"/>
+  <path d="M12 32 Q32 14 52 32 Q32 50 12 32 Z" fill="none" stroke="#1d2125" stroke-width="4" stroke-linejoin="round"/>
   <circle cx="32" cy="32" r="7" fill="#1f7a3a"/>
 </svg>
