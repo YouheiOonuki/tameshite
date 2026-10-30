@@ -6,6 +6,7 @@
   'use strict';
   var Calc = window.Calc, T = window.Tameshite, $ = T.$;
   var el = { result: $('result'), rsub: $('result-sub'), recTable: $('rec-table'), recState: $('rec-state') };
+  var bar = window.YorozuScreen.fixedBar({ bar: 'fixbar', watch: 'result-main', jump: 'result-card', text: 'fixbar-text' });
 
   // --- タブ（1 画面に 1 つ） ---
   var tabs = [].slice.call(document.querySelectorAll('[role="tab"]'));
@@ -68,6 +69,7 @@
     if (cm === null) { el.rsub.textContent = '距離は 5〜200 cm で入れてください。'; return; }
     T.addRecord('roogan', { nearCm: cm });
     el.result.textContent = '近点 ' + cm + ' cm';
+    bar.set(el.result.textContent);
     el.rsub.textContent = 'これより近いと、' + NEAR_MM + ' mm の字がぼやけ始めるということです。たいていの人は 40 歳ごろから老眼を自覚し始め、45 歳くらいで老眼鏡が必要になります（日本眼科医会）。';
     renderRecords();
   });
@@ -98,6 +100,7 @@
     var mm = Number(c.value);
     T.addRecord('roogan', { sizeMm: mm, distCm: dist });
     el.result.textContent = mm + ' mm の字まで';
+    bar.set(el.result.textContent);
     el.rsub.textContent = (dist ? dist + ' cm 離して、' : '') + '字の枠の高さ ' + mm + ' mm（約 ' + Calc.mmToPt(mm).toFixed(1) + ' ポイント）まで読めました。' + (T.scale() ? '' : '① で画面を合わせていないので、実際の大きさとずれています。');
     renderRecords();
   });
@@ -110,6 +113,7 @@
       var v = b.getAttribute('data-rg');
       T.addRecord('roogan', { redGreen: v });
       el.result.textContent = v === 'same' ? '同じくらい' : RG[v] + 'がくっきり';
+      bar.set(el.result.textContent);
       el.rsub.textContent = v === 'same' ? '赤と緑で差はありませんでした。'
         : '眼科では、赤と緑の見え方の差を、めがね・コンタクトの度数が合っているかを見る手がかりにします。この距離に今のめがね（またはめがね無し）が合っているかは、眼科・眼鏡店で確かめてください。';
       renderRecords();

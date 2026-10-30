@@ -306,3 +306,17 @@ details.card.opt.about-tool > summary { white-space: normal; }   /* 長い summa
 details.about-tool h3 { font-size: 0.95rem; margin: 0.9rem 0 0.3rem; }
 details.about-tool p, details.about-tool li { font-size: 0.9rem; line-height: 1.75; }
 details.about-tool ul { padding-left: 1.2rem; margin: 0.3rem 0 0.5rem; }
+
+/* 上端の固定バー（SCREEN D59: 上端）と PC の 2 列（D371）。老眼チェックだけが使う。screen.js が出し入れする。
+   2 列にすると、左に入力・右に結果（sticky）。結果が常に見えるので、固定バーは PC では出番がない */
+.fixed-bar { position: fixed; top: 0; bottom: auto; left: 0; right: 0; z-index: 50; height: calc(var(--tap) + 1px); padding: 0; border-top: 0; border-bottom: 1px solid var(--border); }
+.fixed-bar a {
+  display: block; max-width: 680px; margin: 0 auto; padding: 0 var(--sp-4); height: var(--tap); line-height: var(--tap); text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 700; text-decoration: none;
+}
+@media (min-width: 900px) {
+  .layout-2col { max-width: 1120px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); column-gap: var(--sp-4); align-items: start; }
+  .layout-2col > * { grid-column: 1; }
+  .layout-2col .result-card { grid-column: 2; grid-row: 1 / span 30; position: sticky; top: var(--sp-4); max-height: calc(100vh - 2 * var(--sp-4)); overflow-y: auto; }
+}
+@media print { .fixed-bar { display: none !important; } }
