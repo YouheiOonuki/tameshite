@@ -41,6 +41,7 @@
     $('r-range').textContent = any
       ? 'Recommended for ' + r.range.label.toLowerCase() + ': ' + r.range.min + ' to ' + r.range.max + ' hours a day.'
       : 'Recommended for ' + r.range.label.toLowerCase() + ': ' + r.range.min + ' to ' + r.range.max + ' hours a day, naps included. None of these times reaches that.';
+    window.yzUsed?.();
   }
   function onField(e) {
     var el = e.target; if (!el.dataset || !el.dataset.k) return;
