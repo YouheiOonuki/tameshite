@@ -128,6 +128,7 @@
       var s = r.nearCm !== null ? '近点 ' + r.nearCm + ' cm' : r.sizeMm !== null ? (r.distCm ? r.distCm + ' cm で ' : '') + r.sizeMm + ' mm の字' : '赤緑: ' + RG[r.redGreen];
       return '<tr><td>' + T.fmtDate(r.at) + '</td><td>' + s + '</td></tr>';
     }).join('') : '';
+    window.yzUsed?.();
   }
   T.backupSetup({ kind: 'roogan', afterImport: function () { pxPerMm = scaleNow(); drawCard(); showScaleState(); drawSizes(); renderRecords(); }, afterClear: renderRecords });
   renderRecords();
